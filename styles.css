@@ -285,6 +285,7 @@ button {
 }
 
 .loader__word {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -296,8 +297,76 @@ button {
   line-height: 0.7;
 }
 
-.loader__word span {
+.loader__word > span {
+  position: relative;
+  isolation: isolate;
   display: block;
+  will-change: transform, opacity;
+}
+
+.loader__word > span::before,
+.loader__word > span::after {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  content: attr(data-letter);
+  opacity: var(--loader-print-opacity, 0.26);
+  transform: translate3d(var(--loader-print-x, 0.025em), var(--loader-print-y, 0.018em), 0);
+  pointer-events: none;
+}
+
+.loader__word > span::after {
+  opacity: calc(var(--loader-print-opacity, 0.26) * 0.72);
+  transform: translate3d(calc(var(--loader-print-x, 0.025em) * -0.72), calc(var(--loader-print-y, 0.018em) * -0.72), 0);
+}
+
+.loader__word > span:nth-child(1)::before,
+.loader__word > span:nth-child(4)::after {
+  color: var(--ocean-blue);
+}
+
+.loader__word > span:nth-child(1)::after,
+.loader__word > span:nth-child(3)::before {
+  color: var(--sun-red);
+}
+
+.loader__word > span:nth-child(2)::before,
+.loader__word > span:nth-child(4)::before {
+  color: var(--mustard);
+}
+
+.loader__word > span:nth-child(2)::after,
+.loader__word > span:nth-child(3)::after {
+  color: var(--sea-teal);
+}
+
+.loader__tear {
+  position: absolute;
+  z-index: 4;
+  top: calc(50% - 1.125rem);
+  left: -4vw;
+  width: 108vw;
+  height: 2.25rem;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate3d(-105%, 0, 0);
+  will-change: transform, opacity;
+}
+
+.loader__tear svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.loader__tear path {
+  fill: none;
+  stroke: var(--weathered-white);
+  stroke-width: 7;
+  stroke-linecap: square;
+  stroke-linejoin: bevel;
+  vector-effect: non-scaling-stroke;
+  filter: drop-shadow(0 2px 0 rgba(23, 23, 23, 0.72));
 }
 
 @media (min-width: 821px) {
@@ -314,7 +383,7 @@ button {
     line-height: 0.88;
   }
 
-  .loader__word span {
+  .loader__word > span {
     display: grid;
     width: 100%;
     place-items: center;
@@ -332,7 +401,7 @@ button {
     transform-origin: bottom;
   }
 
-  html.js:not(.wara-loader-gsap) body.is-loading .loader__word span {
+  html.js:not(.wara-loader-gsap) body.is-loading .loader__word > span {
     opacity: 0;
     transform: translateY(125%);
   }
@@ -366,19 +435,19 @@ button {
   animation-delay: 0.18s;
 }
 
-.loader--fallback .loader__word span {
+.loader--fallback .loader__word > span {
   animation: loader-fallback-word-in 0.58s var(--ease) forwards;
 }
 
-.loader--fallback .loader__word span:nth-child(2) {
+.loader--fallback .loader__word > span:nth-child(2) {
   animation-delay: 0.05s;
 }
 
-.loader--fallback .loader__word span:nth-child(3) {
+.loader--fallback .loader__word > span:nth-child(3) {
   animation-delay: 0.1s;
 }
 
-.loader--fallback .loader__word span:nth-child(4) {
+.loader--fallback .loader__word > span:nth-child(4) {
   animation-delay: 0.15s;
 }
 
@@ -395,6 +464,10 @@ button {
 
 .loader--fallback [data-loader-line] {
   animation: loader-fallback-progress 0.95s linear forwards;
+}
+
+.loader--fallback [data-loader-tear] {
+  animation: loader-fallback-tear 0.44s var(--ease-in-out) 0.9s forwards;
 }
 
 .loader--fallback-out .loader__paper-panel:nth-child(odd) {
@@ -414,7 +487,7 @@ button {
 }
 
 .loader--reduced .loader__paper-panel,
-.loader--reduced .loader__word span,
+.loader--reduced .loader__word > span,
 .loader--reduced .loader__top span,
 .loader--reduced .loader__bottom span,
 .loader--reduced .loader__sun,
@@ -441,6 +514,12 @@ button {
 
 @keyframes loader-fallback-progress {
   to { transform: scaleX(1); }
+}
+
+@keyframes loader-fallback-tear {
+  0% { opacity: 0; transform: translate3d(-105%, 0, 0); }
+  12%, 88% { opacity: 1; }
+  100% { opacity: 0; transform: translate3d(105%, 0, 0); }
 }
 
 @keyframes loader-fallback-panel-up {
@@ -594,16 +673,18 @@ button {
   right: 0;
   bottom: 0;
   left: 0;
-  height: 1px;
+  height: 2px;
   content: "";
-  background: currentColor;
+  background: var(--sun-red);
   transform: scaleX(0);
   transform-origin: right;
   transition: transform var(--base) var(--ease);
 }
 
 .desktop-nav a:hover::after,
-.header-archive:hover::after {
+.header-archive:hover::after,
+.desktop-nav a:focus-visible::after,
+.header-archive:focus-visible::after {
   transform: scaleX(1);
   transform-origin: left;
 }
@@ -1035,14 +1116,22 @@ button {
   position: absolute;
   inset: 0;
   opacity: 0;
+  clip-path: inset(100% 0 0 0);
+  transition:
+    clip-path 850ms var(--ease-in-out),
+    opacity 280ms ease-out,
+    transform 1200ms var(--ease);
+  will-change: clip-path, transform;
 }
 
 .product-card:hover .product-card__media img {
   transform: scale(1.045);
 }
 
-.product-card:hover .product-card__alt {
+.product-card:hover .product-card__alt,
+.product-card:focus-within .product-card__alt {
   opacity: 1;
+  clip-path: inset(0 0 0 0);
 }
 
 .product-card__info {

@@ -49,7 +49,7 @@
 
     const desktopLoader = window.matchMedia('(min-width: 821px)').matches;
     const loaderStartedAt = window.performance.now();
-    const desktopMinimumDuration = 2400;
+    const desktopMinimumDuration = 2850;
 
     let returningVisit = false;
     try {
@@ -59,7 +59,7 @@
     }
 
     const shortTransition = !desktopLoader && returningVisit;
-    const failSafeDuration = !gsapReady ? 2200 : (shortTransition ? 1200 : (desktopLoader ? 3900 : 3200));
+    const failSafeDuration = !gsapReady ? 2200 : (shortTransition ? 1200 : (desktopLoader ? 4400 : 3200));
     const failSafe = window.setTimeout(() => finishLoader(loader), failSafeDuration);
 
     const runCssFallback = () => {
@@ -145,6 +145,29 @@
     if (desktopLoader) {
       const counter = { value: 0 };
       const panels = window.gsap.utils.toArray('.loader__paper-panel');
+      const letters = window.gsap.utils.toArray('[data-loader-letter]');
+      const heroLetters = window.gsap.utils.toArray('[data-hero-letter]');
+      const routePath = document.querySelector('[data-loader-route]');
+      const routeDot = document.querySelector('[data-loader-route-dot]');
+      const routeJourney = { value: 0 };
+      const routeLength = routePath?.getTotalLength?.() || 0;
+      const positionRouteDot = () => {
+        if (!routePath || !routeDot || !routeLength) return;
+        const point = routePath.getPointAtLength(routeLength * routeJourney.value);
+        routeDot.setAttribute('cx', point.x.toFixed(2));
+        routeDot.setAttribute('cy', point.y.toFixed(2));
+      };
+      const getHeroTarget = (letter, index) => {
+        const heroLetter = heroLetters[index];
+        if (!heroLetter) return { x: 0, y: 0, scale: 0.94 };
+        const source = letter.getBoundingClientRect();
+        const target = heroLetter.getBoundingClientRect();
+        return {
+          x: target.left + (target.width / 2) - source.left - (source.width / 2),
+          y: target.top + (target.height / 2) - source.top - (source.height / 2),
+          scale: Math.max(0.72, Math.min(1.18, target.height / Math.max(1, source.height)))
+        };
+      };
       const completeDesktopLoader = () => {
         const remaining = desktopMinimumDuration - (window.performance.now() - loaderStartedAt);
         if (remaining > 0) {
@@ -162,15 +185,21 @@
         onComplete: completeDesktopLoader
       });
 
+      positionRouteDot();
       timeline
-        .set(loader, { clipPath: 'inset(0% 0% 0% 0%)' })
-        .fromTo(panels, {
-          scaleY: 0,
-          transformOrigin: (index) => index % 2 === 0 ? 'top' : 'bottom'
-        }, {
-          scaleY: 1,
-          duration: 0.82,
-          stagger: 0.055
+        .set(loader, { clipPath: 'inset(0% 0% 0% 0%)', opacity: 1 })
+        .set(panels, { scaleY: 1, xPercent: 0, transformOrigin: 'center' })
+        .set(letters, {
+          '--loader-print-opacity': 0.18,
+          '--loader-print-x': '0.018em',
+          '--loader-print-y': '0.012em'
+        })
+        .fromTo(panels, { scaleX: 0.965, opacity: 0.92 }, {
+          scaleX: 1,
+          opacity: 1,
+          duration: 0.48,
+          stagger: 0.035,
+          ease: 'power2.out'
         }, 0)
         .fromTo('.loader__top span, .loader__bottom span', {
           y: 16,
@@ -181,17 +210,38 @@
           duration: 0.58,
           stagger: 0.045
         }, 0.08)
-        .fromTo('.loader__word span', {
-          yPercent: 125,
+        .fromTo(letters, {
+          xPercent: (index) => [0, 0, 128, -128][index],
+          yPercent: (index) => [132, -132, 0, 0][index],
           opacity: 0,
-          rotation: (index) => index % 2 === 0 ? -3 : 3
+          rotation: (index) => [-7, 3, 4, -4][index]
         }, {
-          yPercent: 0,
+          xPercent: (index) => [9, -7, 6, -8][index],
+          yPercent: (index) => [-4, 5, -2, 4][index],
           opacity: 1,
+          rotation: (index) => [-1.8, 1.4, -1.1, 1.6][index],
+          duration: 0.72,
+          stagger: 0.055,
+          ease: 'power4.out'
+        }, 0.16)
+        .to(letters, {
+          '--loader-print-opacity': 0.72,
+          '--loader-print-x': '0.064em',
+          '--loader-print-y': '0.042em',
+          duration: 0.28,
+          ease: 'power2.out'
+        }, 0.58)
+        .to(letters, {
+          xPercent: 0,
+          yPercent: 0,
           rotation: 0,
-          duration: 0.82,
-          stagger: 0.06
-        }, 0.1)
+          '--loader-print-opacity': 0.3,
+          '--loader-print-x': '0.024em',
+          '--loader-print-y': '0.016em',
+          duration: 0.38,
+          stagger: 0.018,
+          ease: 'back.out(2.35)'
+        }, 1.02)
         .fromTo('[data-loader-sun]', {
           scale: 0.45,
           rotation: -24,
@@ -200,56 +250,76 @@
           scale: 1,
           rotation: 0,
           opacity: 1,
-          duration: 1
-        }, 0.12)
+          duration: 0.92
+        }, 0.2)
         .fromTo('[data-loader-route]', { strokeDashoffset: 1 }, {
           strokeDashoffset: 0,
-          duration: 1.45,
+          duration: 1.58,
           ease: 'power2.inOut'
-        }, 0.12)
-        .fromTo('[data-loader-route-dot]', { scale: 0, opacity: 0 }, {
+        }, 0.14)
+        .fromTo(routeDot, { scale: 0, opacity: 0 }, {
           scale: 1,
           opacity: 1,
-          duration: 0.45,
+          duration: 0.3,
           ease: 'back.out(1.8)'
-        }, 1.22)
+        }, 0.16)
+        .to(routeJourney, {
+          value: 0.67,
+          duration: 1.52,
+          ease: 'power1.inOut',
+          onUpdate: positionRouteDot
+        }, 0.18)
         .to(counter, {
           value: 100,
-          duration: 1.5,
-          ease: 'power1.inOut',
+          duration: 1.42,
+          ease: 'power3.in',
           onUpdate: () => {
             if (count) count.textContent = String(Math.round(counter.value)).padStart(3, '0');
           }
-        }, 0.12)
+        }, 0.58)
         .to('[data-loader-line]', {
           scaleX: 1,
-          duration: 1.5,
-          ease: 'power1.inOut'
-        }, 0.12)
-        .to('.loader__word span', {
-          yPercent: -125,
-          opacity: 0,
-          duration: 0.55,
-          stagger: 0.035,
+          duration: 1.42,
           ease: 'power3.in'
-        }, 1.35)
+        }, 0.58)
+        .fromTo('[data-loader-tear]', {
+          xPercent: -105,
+          opacity: 0
+        }, {
+          xPercent: 105,
+          opacity: 1,
+          duration: 0.62,
+          ease: 'power3.inOut'
+        }, 1.78)
+        .to('[data-loader-tear]', { opacity: 0, duration: 0.12 }, 2.3)
         .to('.loader__top, .loader__bottom, .loader__route-map, .loader__sun', {
           opacity: 0,
-          duration: 0.32,
+          duration: 0.34,
           ease: 'power2.in'
-        }, 1.65)
-        .call(() => window.dispatchEvent(new CustomEvent('wara:hero-reveal')), null, 1.7)
+        }, 2.04)
+        .call(() => window.dispatchEvent(new CustomEvent('wara:hero-reveal')), null, 1.72)
+        .to(letters, {
+          x: (index, letter) => getHeroTarget(letter, index).x,
+          y: (index, letter) => getHeroTarget(letter, index).y,
+          scale: (index, letter) => getHeroTarget(letter, index).scale,
+          opacity: 0.12,
+          duration: 0.92,
+          stagger: 0.015,
+          ease: 'power3.inOut'
+        }, 2.08)
+        .set(loader, { backgroundColor: 'transparent' }, 2.16)
         .to(panels, {
-          yPercent: (index) => index % 2 === 0 ? -105 : 105,
-          duration: 0.82,
-          stagger: 0.04,
+          xPercent: (index) => [-110, -212, 212, 110][index],
+          rotation: (index) => [-0.8, 0.65, -0.65, 0.8][index],
+          duration: 0.94,
+          stagger: 0.025,
           ease: 'power4.inOut'
-        }, 1.72)
+        }, 2.17)
         .to(loader, {
-          clipPath: 'inset(0% 0% 100% 0%)',
-          duration: 0.82,
-          ease: 'power4.inOut'
-        }, 1.78);
+          opacity: 0,
+          duration: 0.22,
+          ease: 'power2.out'
+        }, 2.98);
       return;
     }
 
@@ -442,7 +512,12 @@
         .from('.hero__studio', { y: 25, opacity: 0, duration: 0.8 }, 0.55)
         .from('.hero__statement > *', { y: 28, opacity: 0, duration: 0.85, stagger: 0.08 }, 0.62)
         .from('.hero__footer span', { y: 12, opacity: 0, duration: 0.6, stagger: 0.05 }, 0.85)
-        .from('.hero__media', { clipPath: 'inset(0 0 100% 0)', scale: 1.08, duration: 1.3, ease: 'power4.inOut' }, 0.08);
+        .from('.hero__media', {
+          clipPath: 'polygon(8% 100%, 100% 100%, 100% 100%, 0 100%, 4% 100%, 0 100%, 5% 100%, 1% 100%, 7% 100%, 2% 100%)',
+          scale: 1.08,
+          duration: 1.15,
+          ease: 'power3.out'
+        }, 0.08);
 
       if (holdDesktopHero) {
         let heroStarted = false;
@@ -558,6 +633,67 @@
             start: '32% top',
             end: 'bottom top',
             scrub: 0.8
+          }
+        });
+      });
+
+      const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+      if (hero && finePointer) {
+        const redLayer = hero.querySelector('.hero__colour-layer--red');
+        const blueLayer = hero.querySelector('.hero__colour-layer--blue');
+        const heroMedia = hero.querySelector('.hero__media');
+        const moveRedX = redLayer ? gsap.quickTo(redLayer, 'x', { duration: 0.75, ease: 'power3.out' }) : null;
+        const moveRedY = redLayer ? gsap.quickTo(redLayer, 'y', { duration: 0.75, ease: 'power3.out' }) : null;
+        const moveBlueX = blueLayer ? gsap.quickTo(blueLayer, 'x', { duration: 0.9, ease: 'power3.out' }) : null;
+        const moveBlueY = blueLayer ? gsap.quickTo(blueLayer, 'y', { duration: 0.9, ease: 'power3.out' }) : null;
+        const moveMediaX = heroMedia ? gsap.quickTo(heroMedia, 'x', { duration: 1.05, ease: 'power3.out' }) : null;
+        const moveMediaY = heroMedia ? gsap.quickTo(heroMedia, 'y', { duration: 1.05, ease: 'power3.out' }) : null;
+
+        hero.addEventListener('pointermove', (event) => {
+          const bounds = hero.getBoundingClientRect();
+          const horizontal = ((event.clientX - bounds.left) / bounds.width) - 0.5;
+          const vertical = ((event.clientY - bounds.top) / bounds.height) - 0.5;
+          moveRedX?.(horizontal * -15);
+          moveRedY?.(vertical * -9);
+          moveBlueX?.(horizontal * 13);
+          moveBlueY?.(vertical * 8);
+          moveMediaX?.(horizontal * 10);
+          moveMediaY?.(vertical * 7);
+        });
+
+        hero.addEventListener('pointerleave', () => {
+          moveRedX?.(0);
+          moveRedY?.(0);
+          moveBlueX?.(0);
+          moveBlueY?.(0);
+          moveMediaX?.(0);
+          moveMediaY?.(0);
+        });
+      }
+
+      if (finePointer) {
+        document.querySelectorAll('.button').forEach((button) => {
+          button.addEventListener('pointermove', (event) => {
+            const bounds = button.getBoundingClientRect();
+            const x = (event.clientX - bounds.left - (bounds.width / 2)) * 0.12;
+            const y = (event.clientY - bounds.top - (bounds.height / 2)) * 0.16;
+            gsap.to(button, { x, y, duration: 0.36, ease: 'power3.out', overwrite: 'auto' });
+          });
+          button.addEventListener('pointerleave', () => {
+            gsap.to(button, { x: 0, y: 0, duration: 0.62, ease: 'elastic.out(1, 0.42)', overwrite: 'auto' });
+          });
+        });
+      }
+
+      document.querySelectorAll('.chapter-heading h2, .products__header h2, .editorial__copy h2, .lookbook__intro h2, .newsletter__heading h2').forEach((heading) => {
+        gsap.fromTo(heading, { yPercent: 5 }, {
+          yPercent: -5,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: heading,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 0.85
           }
         });
       });
@@ -702,6 +838,23 @@
             invalidateOnRefresh: true,
             anticipatePin: 1
           }
+        });
+
+        const galleryItems = Array.from(track.querySelectorAll('.horizontal-item'));
+        galleryItems.forEach((item, index) => {
+          const startRotation = index % 2 === 0 ? -0.75 : 0.65;
+          const endRotation = index % 2 === 0 ? 1.15 : -1.05;
+          gsap.fromTo(item, { rotation: startRotation }, {
+            rotation: endRotation,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: gallery,
+              start: 'top top',
+              end: () => `+=${Math.max(1, distance())}`,
+              scrub: 0.8,
+              invalidateOnRefresh: true
+            }
+          });
         });
 
         const images = Array.from(track.querySelectorAll('img'));
