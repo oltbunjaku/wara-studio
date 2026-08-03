@@ -1224,6 +1224,105 @@ button {
   letter-spacing: 0.08em;
 }
 
+@media (min-width: 821px) {
+  .horizontal-gallery {
+    display: grid;
+    min-height: 100svh;
+    padding-block: clamp(2rem, 4svh, 4rem);
+    grid-template-rows: auto minmax(0, 1fr);
+    align-content: start;
+    overflow: clip;
+  }
+
+  .horizontal-gallery__header {
+    margin-bottom: clamp(1.25rem, 2.5svh, 2.5rem);
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: clamp(2rem, 5vw, 6rem);
+  }
+
+  .horizontal-gallery__header h2 {
+    max-width: 11ch;
+    font-size: clamp(4rem, 6.5vw, 8rem);
+  }
+
+  .horizontal-gallery__viewport {
+    display: flex;
+    min-height: 0;
+    height: 100%;
+    align-items: flex-start;
+    overflow: hidden;
+  }
+
+  .horizontal-gallery__track {
+    height: clamp(30rem, 68svh, 62rem);
+    max-height: 100%;
+    padding-right: clamp(2rem, 6vw, 8rem);
+    padding-left: var(--gutter);
+    will-change: transform;
+  }
+
+  .horizontal-item--tall {
+    width: clamp(28rem, 34vw, 52rem);
+  }
+
+  .horizontal-item--wide {
+    width: clamp(38rem, 52vw, 76rem);
+  }
+
+  .horizontal-item--small {
+    width: clamp(22rem, 26vw, 38rem);
+  }
+
+  .horizontal-item--end {
+    width: clamp(34rem, 46vw, 66rem);
+    justify-content: space-between;
+    padding: clamp(2rem, 3.5vw, 4.5rem);
+  }
+
+  .horizontal-item--end p {
+    max-width: 7ch;
+    margin: 0;
+    font-size: clamp(3.5rem, 4.8vw, 7rem);
+  }
+
+  .horizontal-item--end span {
+    align-self: flex-end;
+  }
+
+  .horizontal-item figcaption {
+    z-index: 2;
+    right: clamp(0.75rem, 1.2vw, 1.25rem);
+    bottom: clamp(0.75rem, 1.2vw, 1.25rem);
+    left: clamp(0.75rem, 1.2vw, 1.25rem);
+    padding: 0.65rem 0.75rem;
+    background: rgba(23, 23, 23, 0.78);
+    color: var(--weathered-white);
+    backdrop-filter: blur(8px);
+  }
+
+  .horizontal-item > .image-label {
+    top: clamp(0.75rem, 1.2vw, 1.25rem);
+    right: clamp(0.75rem, 1.2vw, 1.25rem);
+    bottom: auto;
+  }
+
+  .horizontal-item:nth-child(1) img {
+    object-position: 50% 46%;
+  }
+
+  .horizontal-item:nth-child(2) img {
+    object-position: 50% 58%;
+  }
+
+  .horizontal-item:nth-child(3) img {
+    object-position: 50% 50%;
+  }
+
+  .horizontal-item:nth-child(4) img {
+    object-position: 50% 42%;
+  }
+}
+
 /* Manifesto */
 
 .manifesto {

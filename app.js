@@ -36,6 +36,8 @@
     if (!loader) return;
 
     const desktopLoader = window.matchMedia('(min-width: 821px)').matches;
+    const loaderStartedAt = window.performance.now();
+    const desktopMinimumDuration = 2400;
 
     let returningVisit = false;
     try {
@@ -44,19 +46,8 @@
       returningVisit = false;
     }
 
-    let sameOriginReferrer = false;
-    try {
-      sameOriginReferrer = Boolean(document.referrer) && new URL(document.referrer).origin === window.location.origin;
-    } catch (error) {
-      sameOriginReferrer = false;
-    }
-
-    const navigationEntry = window.performance?.getEntriesByType?.('navigation')?.[0];
-    const hardReload = navigationEntry?.type === 'reload';
-    const shortTransition = desktopLoader
-      ? returningVisit && sameOriginReferrer && !hardReload
-      : returningVisit;
-    const failSafe = window.setTimeout(() => finishLoader(loader), shortTransition ? 1200 : (desktopLoader ? 3600 : 3200));
+    const shortTransition = !desktopLoader && returningVisit;
+    const failSafe = window.setTimeout(() => finishLoader(loader), shortTransition ? 1200 : (desktopLoader ? 3800 : 3200));
 
     if (reduceMotion || !gsapReady) {
       window.setTimeout(() => {
@@ -78,9 +69,6 @@
       shortTimeline
         .from('.loader__word span', { yPercent: 90, opacity: 0, duration: 0.32, stagger: 0.025 })
         .to('[data-loader-line]', { scaleX: 1, duration: 0.45, ease: 'power1.inOut' }, 0);
-      if (desktopLoader) {
-        shortTimeline.call(() => window.dispatchEvent(new CustomEvent('wara:hero-reveal')), null, 0.36);
-      }
       shortTimeline.to(loader, { yPercent: -100, duration: 0.48, ease: 'power4.inOut' }, 0.42);
       return;
     }
@@ -88,12 +76,21 @@
     if (desktopLoader) {
       const counter = { value: 0 };
       const panels = window.gsap.utils.toArray('.loader__paper-panel');
+      const completeDesktopLoader = () => {
+        const remaining = desktopMinimumDuration - (window.performance.now() - loaderStartedAt);
+        if (remaining > 0) {
+          window.setTimeout(() => {
+            window.clearTimeout(failSafe);
+            finishLoader(loader);
+          }, remaining);
+          return;
+        }
+        window.clearTimeout(failSafe);
+        finishLoader(loader);
+      };
       const timeline = window.gsap.timeline({
         defaults: { ease: 'power4.out' },
-        onComplete: () => {
-          window.clearTimeout(failSafe);
-          finishLoader(loader);
-        }
+        onComplete: completeDesktopLoader
       });
 
       timeline
@@ -598,19 +595,57 @@
       const gallery = document.querySelector('[data-horizontal-gallery]');
       const track = document.querySelector('[data-horizontal-track]');
       if (gallery && track) {
-        const distance = () => Math.max(0, track.scrollWidth - window.innerWidth);
+        const viewport = gallery.querySelector('.horizontal-gallery__viewport');
+        const distance = () => Math.max(0, track.scrollWidth - (viewport?.clientWidth || window.innerWidth));
+        let refreshFrame = null;
+        let lastTrackWidth = track.scrollWidth;
+        let lastViewportWidth = viewport?.clientWidth || window.innerWidth;
+        const scheduleGalleryRefresh = () => {
+          if (refreshFrame) window.cancelAnimationFrame(refreshFrame);
+          refreshFrame = window.requestAnimationFrame(() => {
+            refreshFrame = null;
+            ScrollTrigger.refresh();
+          });
+        };
+
         gsap.to(track, {
           x: () => -distance(),
           ease: 'none',
           scrollTrigger: {
             trigger: gallery,
             start: 'top top',
-            end: () => `+=${distance()}`,
+            end: () => `+=${Math.max(1, distance())}`,
             pin: true,
             scrub: 0.8,
-            invalidateOnRefresh: true
+            invalidateOnRefresh: true,
+            anticipatePin: 1
           }
         });
+
+        const images = Array.from(track.querySelectorAll('img'));
+        const imageReady = (image) => {
+          if (image.complete) return image.decode?.().catch(() => undefined) || Promise.resolve();
+          return new Promise((resolve) => {
+            image.addEventListener('load', resolve, { once: true });
+            image.addEventListener('error', resolve, { once: true });
+          });
+        };
+        Promise.allSettled(images.map(imageReady)).then(scheduleGalleryRefresh);
+
+        if ('ResizeObserver' in window && viewport) {
+          const galleryResizeObserver = new ResizeObserver(() => {
+            const nextTrackWidth = track.scrollWidth;
+            const nextViewportWidth = viewport.clientWidth;
+            if (nextTrackWidth === lastTrackWidth && nextViewportWidth === lastViewportWidth) return;
+            lastTrackWidth = nextTrackWidth;
+            lastViewportWidth = nextViewportWidth;
+            scheduleGalleryRefresh();
+          });
+          galleryResizeObserver.observe(track);
+          galleryResizeObserver.observe(viewport);
+        }
+
+        window.addEventListener('resize', scheduleGalleryRefresh, { passive: true });
       }
     }
 
