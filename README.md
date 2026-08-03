@@ -1,48 +1,97 @@
-# WARA STUDIO Local Visual Prototype
+# WARA STUDIO Standalone Website
 
-This folder is a standalone visual-design prototype. It does not connect to Shopify, a cart, checkout, payments, customer accounts, or a product database.
+WARA STUDIO is a plain HTML, CSS and JavaScript visual-commerce prototype for an independent streetwear label from Mitrovicë, Kosovo. It has no Shopify code, backend, login, payment form or production checkout.
 
-## Open it directly
+## Pages
 
-Double-click `index.html`, or open it from a browser with `Ctrl+O`.
+- `index.html` — cinematic editorial homepage and four featured pieces.
+- `shop.html` — complete eight-product catalog with collection, category and sorting controls.
+- `product.html?id=heavyweight-tee` — reusable product page driven by a product ID query.
+- `archive.html` — Archive 001 campaign, landscape and lookbook world.
+- `story.html` — brand origin, manifesto and working principles.
+- `cart.html` — local frontend cart with quantity and removal controls.
 
-The HTML, CSS, local JavaScript, GSAP, and ScrollTrigger work without a build step. The placeholder photography is loaded from `picsum.photos`, so an internet connection is needed for those images and for the Outfit webfont.
+All links are relative, so the website works both locally and under the GitHub Pages project path `/wara-studio/`.
 
-## Recommended local server
+## Open locally
 
-For the most consistent browser behavior, open PowerShell in this `prototype` folder and run:
+Open PowerShell in `C:\Users\oltbu\OneDrive\Documents\wara-studio` and run:
 
 ```powershell
 python -m http.server 4173
 ```
 
-Then open `http://localhost:4173`.
+Then open:
 
-No project package files are created by this command. Stop the server with `Ctrl+C`.
+- Homepage: `http://localhost:4173/`
+- Shop: `http://localhost:4173/shop.html`
+- Product: `http://localhost:4173/product.html?id=heavyweight-tee`
+- Archive: `http://localhost:4173/archive.html`
+- Story: `http://localhost:4173/story.html`
+- Cart: `http://localhost:4173/cart.html`
 
-## Files
+Stop the server with `Ctrl+C`. There is no build step and no package installation.
 
-- `index.html` contains the full homepage structure and prototype content.
-- `styles.css` contains the responsive visual system and layout.
-- `app.js` contains loader, navigation, cursor, GSAP, ScrollTrigger, and form-demo behavior.
-- `vendor/` contains local copies of GSAP and ScrollTrigger already used by the WARA theme foundation.
+## Shared code
 
-## Placeholder photography
+- `styles.css` contains the complete responsive design system and page layouts.
+- `app.js` contains the loader, navigation, cursor, GSAP, ScrollTrigger and editorial interaction logic.
+- `catalog.js` contains the mock product catalog and localStorage cart data layer.
+- `commerce.js` renders shop, product and cart interfaces from the shared catalog.
+- `vendor/` contains local GSAP and ScrollTrigger builds.
 
-Every replaceable image has visible `PLACEHOLDER` metadata in the interface and descriptive alternative text. Replace image `src` values in `index.html` while keeping the surrounding classes and aspect ratios.
+## Cart and checkout boundary
 
-Recommended final art direction:
+The cart is stored only in the visitor's browser under the localStorage key `waraStudioCartV1`. It supports product variants, quantities, removal, totals and persistence across refreshes.
 
-- Hero: full-length vertical campaign portrait with clear negative space on the left.
-- Drop introduction: high-contrast silhouette or garment detail.
-- Products: front and alternate editorial images for each of the four mock products.
-- Mitrovicë editorial: one architectural vertical and one close street detail.
-- Lookbook: four consistent full-body vertical frames from one campaign.
-- Horizontal archive: four environment, road, texture, and night photographs.
-- Manifesto: tight human or garment-detail crop.
+Checkout is intentionally a visible placeholder. The website does not request or store card, payment, delivery or account information. Secure checkout will be connected later through a production commerce platform.
 
-Use original WARA photography or properly licensed material only. Do not introduce anime characters, logos, or copied artwork.
+## Image replacement map
+
+Current images are art-direction placeholders. Replace them with original WARA photography or properly licensed assets while preserving the existing aspect ratios and the intended balance of roughly 55% clothing imagery and 45% atmosphere.
+
+### Homepage — `index.html`
+
+- Hero: full-body or mid-body campaign portrait with negative space for the layered WARA title.
+- Drop 001 introduction: keep the canal, waterway or similarly strong travel image; it should remain atmospheric.
+- Featured products: Heavyweight Tee, Archive Hoodie, Transit Cargo and No Destination Jacket, each with primary and hover images.
+- Mitrovicë editorial: industrial architecture and close street detail.
+- Lookbook preview: four consistent vertical model looks from one campaign.
+- Horizontal field archive: bridge or structure, road movement, distressed surface and night environment.
+- Manifesto: close human, hand or garment-construction detail.
+
+### Shared product catalog — `catalog.js`
+
+Each of the eight products has three ordered image positions:
+
+1. Primary campaign or garment view.
+2. Alternate model, back or colourway view.
+3. Fabric, construction or styling detail.
+
+Products: WARA Heavyweight Tee, Archive Hoodie 001, Transit Cargo, No Destination Jacket, Route Knit, Field Overshirt, WARA Cap and Archive Bag. These images are reused automatically by `shop.html`, `product.html` and `cart.html`.
+
+### Shop — `shop.html`
+
+- Closing field note: open road or journey landscape; keep this atmospheric rather than product-led.
+
+### Archive — `archive.html`
+
+- Hero: ocean or large open-water horizon.
+- Expanding archive slices: city architecture, canal or water, model campaign and night landscape.
+- Contact sheet: Heavyweight Tee look, industrial structure, Archive Hoodie look, road landscape, Transit Cargo look and lake or mountain journey.
+
+### Story — `story.html`
+
+- Origin: industrial city architecture.
+- Manifesto: model in motion.
+- Field voices: three overlapping campaign portraits.
 
 ## Motion and accessibility
 
-Desktop uses GSAP for the hero, reveal masks, parallax, lookbook stacking, manifesto text, and the pinned horizontal gallery. Tablet and mobile reduce or remove pinning and parallax. `prefers-reduced-motion` disables complex motion and keeps all content visible.
+The full homepage loader plays once per browser session. Repeat homepage visits use a shorter transition through `sessionStorage`. `prefers-reduced-motion` removes complex motion and the loader has both a no-JavaScript fallback and a timed fail-safe.
+
+Desktop uses layered hero type, route drawing, image reveals, parallax, lookbook stacking and horizontal archive motion. Tablet and mobile reduce or remove pinning and parallax. Navigation, filters, variant controls, quantity controls, dialogs and cart actions are keyboard accessible with visible focus states.
+
+## Publishing
+
+The repository is compatible with GitHub Pages from the `main` branch root. No secret values or API credentials are required. Do not add payment forms or API keys to this repository.

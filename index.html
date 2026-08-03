@@ -13,12 +13,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <script>document.documentElement.classList.add('js');</script>
+    <noscript><style>.loader{display:none!important}body.is-loading{overflow:auto!important}</style></noscript>
   </head>
-  <body class="is-loading">
+  <body class="is-loading" data-page="home">
     <a class="skip-link" href="#main-content">Skip to content</a>
 
     <div class="loader" data-loader role="status" aria-live="polite" aria-label="Loading WARA Archive 001">
       <div class="loader__grain" aria-hidden="true"></div>
+      <div class="loader__paper-panels" aria-hidden="true">
+        <span class="loader__paper-panel"></span>
+        <span class="loader__paper-panel"></span>
+        <span class="loader__paper-panel"></span>
+      </div>
       <div class="loader__frame">
         <div class="loader__top technical-row">
           <span>WARA/STUDIO</span>
@@ -41,19 +47,19 @@
 
     <header class="site-header" data-header>
       <div class="site-header__inner shell">
-        <a class="brand" href="#top" aria-label="WARA STUDIO home">
+        <a class="brand" href="index.html" aria-label="WARA STUDIO home">
           <span class="brand__name">WARA/STUDIO</span>
           <span class="brand__origin">MITROVICË — KOSOVO</span>
         </a>
 
         <nav class="desktop-nav" aria-label="Primary navigation">
-          <a href="#drop">DROP 001</a>
-          <a href="#lookbook">LOOKBOOK</a>
-          <a href="#manifesto">MANIFESTO</a>
+          <a href="shop.html" data-nav-page="shop">SHOP</a>
+          <a href="archive.html" data-nav-page="archive">ARCHIVE</a>
+          <a href="story.html" data-nav-page="story">STORY</a>
         </nav>
 
         <div class="header-actions">
-          <a class="header-archive" href="#products">ENTER ARCHIVE</a>
+          <a class="header-archive" href="cart.html" data-nav-page="cart">CART (<span data-cart-count>0</span>)</a>
           <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" data-menu-toggle>
             <span class="sr-only">Open menu</span>
             <span></span><span></span>
@@ -63,10 +69,10 @@
 
       <div class="mobile-menu" id="mobile-menu" data-mobile-menu hidden>
         <nav aria-label="Mobile navigation">
-          <a href="#drop">DROP 001</a>
-          <a href="#products">PRODUCTS</a>
-          <a href="#lookbook">LOOKBOOK</a>
-          <a href="#manifesto">MANIFESTO</a>
+          <a href="shop.html" data-nav-page="shop">SHOP</a>
+          <a href="archive.html" data-nav-page="archive">ARCHIVE</a>
+          <a href="story.html" data-nav-page="story">STORY</a>
+          <a href="cart.html" data-nav-page="cart">CART (<span data-cart-count>0</span>)</a>
         </nav>
         <div class="mobile-menu__meta technical-row">
           <span>MTV — 2026</span>
@@ -87,7 +93,7 @@
           <circle cx="553" cy="363" r="8"/>
         </svg>
         <div class="hero__media" data-parallax data-speed="0.12">
-          <img src="https://picsum.photos/seed/wara-hero-movement/1600/2000" alt="Sun-faded fashion placeholder for the WARA hero">
+          <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&amp;fit=crop&amp;w=1800&amp;q=88" alt="Editorial fashion campaign placeholder for the WARA hero" fetchpriority="high" decoding="async">
           <div class="image-label">PLACEHOLDER IMAGE — HERO CAMPAIGN</div>
         </div>
         <div class="hero__wash" aria-hidden="true"></div>
@@ -115,7 +121,7 @@
 
             <div class="hero__statement">
               <p>NO FIXED<br>DESTINATION.</p>
-              <a class="button button--light" href="#drop"><span>ENTER THE ARCHIVE</span><span aria-hidden="true">↘</span></a>
+              <a class="button button--light" href="shop.html"><span>ENTER THE SHOP</span><span aria-hidden="true">↘</span></a>
             </div>
           </div>
 
@@ -147,7 +153,7 @@
 
           <div class="drop-intro__body">
             <div class="drop-intro__image image-reveal" data-cursor-label="OPEN">
-              <img src="https://picsum.photos/seed/wara-drop-silhouette/1200/1600" alt="Monochrome silhouette placeholder for Drop 001">
+              <img src="https://picsum.photos/seed/wara-drop-silhouette/1200/1600" alt="Canal or waterway atmosphere placeholder for Drop 001" loading="lazy" decoding="async">
               <span class="image-label image-label--dark">PLACEHOLDER — DROP PORTRAIT</span>
             </div>
             <div class="drop-intro__copy reveal-group">
@@ -171,66 +177,83 @@
               <p class="kicker">FEATURED / ARCHIVE 001</p>
               <h2>Four forms.<br>One directionless system.</h2>
             </div>
-            <p>Mock products for visual approval only. No cart, Shopify data, checkout, or payment connection exists in this prototype.</p>
+            <p>Four pieces from the first WARA uniform. Built for movement, weight and the uncertainty between places.</p>
           </header>
 
           <div class="product-grid" data-product-grid>
             <article class="product-card product-card--hero" data-cursor-label="STUDY">
-              <a href="#newsletter" aria-label="View visual study for WARA Heavyweight Tee">
+              <a href="product.html?id=heavyweight-tee" aria-label="View WARA Heavyweight Tee">
                 <div class="product-card__media">
-                  <img src="https://picsum.photos/seed/wara-heavyweight-tee/1200/1600" alt="Placeholder for WARA Heavyweight Tee">
-                  <img class="product-card__alt" src="https://picsum.photos/seed/wara-heavyweight-tee-alt/1200/1600" alt="Alternate placeholder for WARA Heavyweight Tee">
+                  <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&amp;fit=crop&amp;w=1200&amp;q=84" alt="Campaign placeholder for WARA Heavyweight Tee" loading="lazy" decoding="async">
+                  <img class="product-card__alt" src="https://images.unsplash.com/photo-1506629082955-511b1aa562c8?auto=format&amp;fit=crop&amp;w=1200&amp;q=84" alt="Alternate campaign placeholder for WARA Heavyweight Tee" loading="lazy" decoding="async">
                   <span class="image-label image-label--dark">PLACEHOLDER — PRODUCT 01</span>
                 </div>
                 <div class="product-card__info">
-                  <div><span>WARA HEAVYWEIGHT TEE</span><small>WASHED BLACK / 280 GSM</small></div>
+                  <div><span>WARA HEAVYWEIGHT TEE</span><small>WEATHERED WHITE / INK / RED</small></div>
                   <span>€68</span>
                 </div>
               </a>
+              <div class="product-card__actions">
+                <a href="product.html?id=heavyweight-tee">View product</a>
+                <button type="button" data-quick-add="heavyweight-tee">Quick add</button>
+              </div>
             </article>
 
             <article class="product-card product-card--wide" data-cursor-label="STUDY">
-              <a href="#newsletter" aria-label="View visual study for Archive Hoodie 001">
+              <a href="product.html?id=archive-hoodie" aria-label="View Archive Hoodie 001">
                 <div class="product-card__media">
-                  <img src="https://picsum.photos/seed/wara-archive-hoodie/1400/1000" alt="Placeholder for Archive Hoodie 001">
-                  <img class="product-card__alt" src="https://picsum.photos/seed/wara-archive-hoodie-alt/1400/1000" alt="Alternate placeholder for Archive Hoodie 001">
+                  <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&amp;fit=crop&amp;w=1400&amp;q=84" alt="Campaign placeholder for Archive Hoodie 001" loading="lazy" decoding="async">
+                  <img class="product-card__alt" src="https://images.unsplash.com/photo-1578681994506-b8f463449011?auto=format&amp;fit=crop&amp;w=1400&amp;q=84" alt="Alternate campaign placeholder for Archive Hoodie 001" loading="lazy" decoding="async">
                   <span class="image-label image-label--dark">PLACEHOLDER — PRODUCT 02</span>
                 </div>
                 <div class="product-card__info">
-                  <div><span>ARCHIVE HOODIE 001</span><small>INK / STRUCTURED FLEECE</small></div>
-                  <span>€148</span>
+                  <div><span>ARCHIVE HOODIE 001</span><small>INK BLACK / DEEP OCEAN</small></div>
+                  <span>€145</span>
                 </div>
               </a>
+              <div class="product-card__actions">
+                <a href="product.html?id=archive-hoodie">View product</a>
+                <button type="button" data-quick-add="archive-hoodie">Quick add</button>
+              </div>
             </article>
 
             <article class="product-card product-card--small" data-cursor-label="STUDY">
-              <a href="#newsletter" aria-label="View visual study for Transit Cargo">
+              <a href="product.html?id=transit-cargo" aria-label="View Transit Cargo">
                 <div class="product-card__media">
-                  <img src="https://picsum.photos/seed/wara-transit-cargo/900/1100" alt="Placeholder for Transit Cargo">
-                  <img class="product-card__alt" src="https://picsum.photos/seed/wara-transit-cargo-alt/900/1100" alt="Alternate placeholder for Transit Cargo">
+                  <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&amp;fit=crop&amp;w=1000&amp;q=84" alt="Campaign placeholder for Transit Cargo" loading="lazy" decoding="async">
+                  <img class="product-card__alt" src="https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&amp;fit=crop&amp;w=1000&amp;q=84" alt="Alternate campaign placeholder for Transit Cargo" loading="lazy" decoding="async">
                   <span class="image-label image-label--dark">PLACEHOLDER — PRODUCT 03</span>
                 </div>
                 <div class="product-card__info">
-                  <div><span>TRANSIT CARGO</span><small>OXIDISED OLIVE / RIPSTOP</small></div>
-                  <span>€172</span>
+                  <div><span>TRANSIT CARGO</span><small>FIELD KHAKI / INK BLACK</small></div>
+                  <span>€128</span>
                 </div>
               </a>
+              <div class="product-card__actions">
+                <a href="product.html?id=transit-cargo">View product</a>
+                <button type="button" data-quick-add="transit-cargo">Quick add</button>
+              </div>
             </article>
 
             <article class="product-card product-card--small" data-cursor-label="STUDY">
-              <a href="#newsletter" aria-label="View visual study for No Destination Jacket">
+              <a href="product.html?id=destination-jacket" aria-label="View No Destination Jacket">
                 <div class="product-card__media">
-                  <img src="https://picsum.photos/seed/wara-destination-jacket/900/1100" alt="Placeholder for No Destination Jacket">
-                  <img class="product-card__alt" src="https://picsum.photos/seed/wara-destination-jacket-alt/900/1100" alt="Alternate placeholder for No Destination Jacket">
+                  <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&amp;fit=crop&amp;w=1000&amp;q=84" alt="Campaign placeholder for No Destination Jacket" loading="lazy" decoding="async">
+                  <img class="product-card__alt" src="https://images.unsplash.com/photo-1543076447-215ad9ba6923?auto=format&amp;fit=crop&amp;w=1000&amp;q=84" alt="Alternate campaign placeholder for No Destination Jacket" loading="lazy" decoding="async">
                   <span class="image-label image-label--dark">PLACEHOLDER — PRODUCT 04</span>
                 </div>
                 <div class="product-card__info">
-                  <div><span>NO DESTINATION JACKET</span><small>BLACK / WEATHER SHELL</small></div>
-                  <span>€248</span>
+                  <div><span>NO DESTINATION JACKET</span><small>SEA TEAL / INK BLACK</small></div>
+                  <span>€210</span>
                 </div>
               </a>
+              <div class="product-card__actions">
+                <a href="product.html?id=destination-jacket">View product</a>
+                <button type="button" data-quick-add="destination-jacket">Quick add</button>
+              </div>
             </article>
           </div>
+          <div class="products__shop-link reveal-group"><a class="button button--light" href="shop.html"><span>VIEW ALL EIGHT PIECES</span><span aria-hidden="true">↘</span></a></div>
         </div>
       </section>
 
@@ -247,11 +270,11 @@
           </div>
 
           <figure class="editorial__image editorial__image--primary image-reveal" data-parallax data-speed="0.08">
-            <img src="https://picsum.photos/seed/wara-mitrovice-concrete/1200/1600" alt="Architectural placeholder for Mitrovicë editorial story">
+            <img src="https://picsum.photos/seed/wara-mitrovice-concrete/1200/1600" alt="Architectural placeholder for Mitrovicë editorial story" loading="lazy" decoding="async">
             <figcaption class="image-label">PLACEHOLDER — CITY / CONCRETE</figcaption>
           </figure>
           <figure class="editorial__image editorial__image--secondary image-reveal" data-parallax data-speed="-0.05">
-            <img src="https://picsum.photos/seed/wara-street-detail/900/1100" alt="Street detail placeholder for WARA editorial story">
+            <img src="https://picsum.photos/seed/wara-street-detail/900/1100" alt="Street detail placeholder for WARA editorial story" loading="lazy" decoding="async">
             <figcaption class="image-label">PLACEHOLDER — STREET DETAIL</figcaption>
           </figure>
           <p class="editorial__vertical" aria-hidden="true">MITROVICË — WITHOUT BORDERS — EST. 2026</p>
@@ -278,25 +301,25 @@
 
           <div class="lookbook__cards">
             <article class="lookbook-card" data-lookbook-card data-index="01">
-              <img src="https://picsum.photos/seed/wara-lookbook-shadow/1400/1800" alt="Lookbook placeholder: shadow silhouette">
+              <img src="https://picsum.photos/seed/wara-lookbook-shadow/1400/1800" alt="Lookbook placeholder: shadow silhouette" loading="lazy" decoding="async">
               <div class="lookbook-card__wash"></div>
               <div class="lookbook-card__meta technical-row"><span>SHADOW / ARRIVAL</span><span>LOOK 01</span></div>
               <span class="image-label">PLACEHOLDER — LOOK 01</span>
             </article>
             <article class="lookbook-card" data-lookbook-card data-index="02">
-              <img src="https://picsum.photos/seed/wara-lookbook-concrete/1400/1800" alt="Lookbook placeholder: figure by concrete">
+              <img src="https://picsum.photos/seed/wara-lookbook-concrete/1400/1800" alt="Lookbook placeholder: figure by concrete" loading="lazy" decoding="async">
               <div class="lookbook-card__wash"></div>
               <div class="lookbook-card__meta technical-row"><span>CONCRETE / PAUSE</span><span>LOOK 02</span></div>
               <span class="image-label">PLACEHOLDER — LOOK 02</span>
             </article>
             <article class="lookbook-card" data-lookbook-card data-index="03">
-              <img src="https://picsum.photos/seed/wara-lookbook-transit/1400/1800" alt="Lookbook placeholder: figure in transit">
+              <img src="https://picsum.photos/seed/wara-lookbook-transit/1400/1800" alt="Lookbook placeholder: figure in transit" loading="lazy" decoding="async">
               <div class="lookbook-card__wash"></div>
               <div class="lookbook-card__meta technical-row"><span>TRANSIT / SPEED</span><span>LOOK 03</span></div>
               <span class="image-label">PLACEHOLDER — LOOK 03</span>
             </article>
             <article class="lookbook-card" data-lookbook-card data-index="04">
-              <img src="https://picsum.photos/seed/wara-lookbook-night/1400/1800" alt="Lookbook placeholder: night portrait">
+              <img src="https://picsum.photos/seed/wara-lookbook-night/1400/1800" alt="Lookbook placeholder: night portrait" loading="lazy" decoding="async">
               <div class="lookbook-card__wash"></div>
               <div class="lookbook-card__meta technical-row"><span>NIGHT / DEPARTURE</span><span>LOOK 04</span></div>
               <span class="image-label">PLACEHOLDER — LOOK 04</span>
@@ -317,22 +340,22 @@
         <div class="horizontal-gallery__viewport">
           <div class="horizontal-gallery__track" data-horizontal-track>
             <figure class="horizontal-item horizontal-item--tall">
-              <img src="https://picsum.photos/seed/wara-field-bridge/1200/1600" alt="Placeholder field image of bridge-like structure">
+              <img src="https://picsum.photos/seed/wara-field-bridge/1200/1600" alt="Placeholder field image of bridge-like structure" loading="lazy" decoding="async">
               <figcaption><span>BETWEEN SIDES</span><span>MTV / 01</span></figcaption>
               <span class="image-label">PLACEHOLDER — FIELD 01</span>
             </figure>
             <figure class="horizontal-item horizontal-item--wide">
-              <img src="https://picsum.photos/seed/wara-field-road/1600/1100" alt="Placeholder field image of road movement">
+              <img src="https://picsum.photos/seed/wara-field-road/1600/1100" alt="Placeholder field image of road movement" loading="lazy" decoding="async">
               <figcaption><span>NO MARKED ROUTE</span><span>MTV / 02</span></figcaption>
               <span class="image-label">PLACEHOLDER — FIELD 02</span>
             </figure>
             <figure class="horizontal-item horizontal-item--small">
-              <img src="https://picsum.photos/seed/wara-field-texture/1000/1300" alt="Placeholder field image of distressed texture">
+              <img src="https://picsum.photos/seed/wara-field-texture/1000/1300" alt="Placeholder field image of distressed texture" loading="lazy" decoding="async">
               <figcaption><span>SURFACE MEMORY</span><span>MTV / 03</span></figcaption>
               <span class="image-label">PLACEHOLDER — FIELD 03</span>
             </figure>
             <figure class="horizontal-item horizontal-item--wide">
-              <img src="https://picsum.photos/seed/wara-field-night/1600/1100" alt="Placeholder field image at night">
+              <img src="https://picsum.photos/seed/wara-field-night/1600/1100" alt="Placeholder field image at night" loading="lazy" decoding="async">
               <figcaption><span>AFTER THE SIGNAL</span><span>MTV / 04</span></figcaption>
               <span class="image-label">PLACEHOLDER — FIELD 04</span>
             </figure>
@@ -354,7 +377,7 @@
             We move before certainty. We wear the marks of distance. We reject the fixed route, the borrowed symbol, the finished identity. WARA is made for the self in motion.
           </p>
           <figure class="manifesto__inline-image image-reveal">
-            <img src="https://picsum.photos/seed/wara-manifesto-hands/1200/800" alt="Placeholder detail image for the WARA manifesto">
+            <img src="https://picsum.photos/seed/wara-manifesto-hands/1200/800" alt="Placeholder detail image for the WARA manifesto" loading="lazy" decoding="async">
             <figcaption class="image-label">PLACEHOLDER — HUMAN DETAIL</figcaption>
           </figure>
           <p class="manifesto__closing">FROM MITROVICË,<br>WITHOUT BORDERS.</p>
@@ -386,10 +409,10 @@
           <p>Independent streetwear study<br>from Mitrovicë, Kosovo.</p>
         </div>
         <nav aria-label="Footer navigation">
-          <a href="#top">HOME</a>
-          <a href="#drop">DROP 001</a>
-          <a href="#lookbook">LOOKBOOK</a>
-          <a href="#manifesto">MANIFESTO</a>
+          <a href="index.html">HOME</a>
+          <a href="shop.html">SHOP</a>
+          <a href="archive.html">ARCHIVE</a>
+          <a href="story.html">STORY</a>
         </nav>
         <div class="site-footer__social">
           <a href="#newsletter">INSTAGRAM ↗</a>
@@ -406,6 +429,8 @@
 
     <script src="vendor/gsap.min.js"></script>
     <script src="vendor/ScrollTrigger.min.js"></script>
+    <script src="catalog.js"></script>
     <script src="app.js"></script>
+    <script src="commerce.js"></script>
   </body>
 </html>
