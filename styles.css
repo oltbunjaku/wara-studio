@@ -252,6 +252,8 @@ button {
   overflow: hidden;
   background: var(--ink);
   color: var(--paper);
+  clip-path: inset(0);
+  will-change: clip-path, transform;
 }
 
 .loader[hidden] {
@@ -296,6 +298,12 @@ button {
 
 .loader__word span {
   display: block;
+}
+
+.loader__location-desktop,
+.loader__route-map,
+.loader__sun {
+  display: none;
 }
 
 .loader__line {
@@ -2568,8 +2576,12 @@ button {
   z-index: 0;
   inset: 0;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   pointer-events: none;
+}
+
+.loader__paper-panel {
+  will-change: transform;
 }
 
 .loader__paper-panel:nth-child(1) {
@@ -2584,12 +2596,73 @@ button {
   background: var(--ocean-blue);
 }
 
+.loader__paper-panel:nth-child(4) {
+  background: var(--mustard);
+}
+
 .loader__frame {
   z-index: 2;
 }
 
 .loader__grain {
   z-index: 3;
+}
+
+@media (min-width: 821px) {
+  .loader__location-mobile {
+    display: none;
+  }
+
+  .loader__location-desktop {
+    display: inline;
+  }
+
+  .loader__route-map {
+    position: absolute;
+    z-index: 1;
+    inset: 9vh 4vw 8vh;
+    display: block;
+    color: rgba(23, 23, 23, 0.54);
+    pointer-events: none;
+  }
+
+  .loader__route-map svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .loader__route-path {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-dasharray: 0.018 0.026;
+    stroke-dashoffset: 1;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .loader__route-dot {
+    fill: var(--mustard);
+    stroke: var(--ink);
+    stroke-width: 3;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  .loader__sun {
+    position: absolute;
+    z-index: 1;
+    top: 12vh;
+    right: 7vw;
+    display: block;
+    width: clamp(6rem, 10vw, 11rem);
+    aspect-ratio: 1;
+    border: 1px solid rgba(23, 23, 23, 0.55);
+    border-radius: 50%;
+    background: rgba(216, 162, 58, 0.8);
+    box-shadow: inset 0 0 0 clamp(0.65rem, 1.2vw, 1.4rem) rgba(243, 230, 200, 0.22);
+    pointer-events: none;
+  }
 }
 
 .desktop-nav a[aria-current="page"],
@@ -2720,6 +2793,7 @@ button {
   font-size: clamp(1.15rem, 2vw, 2rem);
   font-weight: 600;
   line-height: 1.12;
+  text-wrap: balance;
 }
 
 .page-hero--shop {
@@ -4156,6 +4230,19 @@ button {
   .page-hero--cart .page-hero__title {
     font-size: clamp(4.5rem, 24vw, 7rem);
     line-height: 0.75;
+  }
+
+  .page-hero--shop .page-hero__title {
+    font-size: clamp(4.35rem, 23vw, 6.25rem);
+  }
+
+  .page-hero--shop .page-hero__lead {
+    width: 100%;
+    max-width: 22rem;
+    margin-right: auto;
+    font-size: clamp(1.02rem, 4.55vw, 1.2rem);
+    line-height: 1.1;
+    overflow-wrap: normal;
   }
 
   .archive-hero .page-hero__title,

@@ -35,6 +35,8 @@
     const count = document.querySelector('[data-loader-count]');
     if (!loader) return;
 
+    const desktopLoader = window.matchMedia('(min-width: 821px)').matches;
+
     let returningVisit = false;
     try {
       returningVisit = window.sessionStorage.getItem('waraArchiveSeen') === 'true';
@@ -42,7 +44,19 @@
       returningVisit = false;
     }
 
-    const failSafe = window.setTimeout(() => finishLoader(loader), returningVisit ? 1200 : 3200);
+    let sameOriginReferrer = false;
+    try {
+      sameOriginReferrer = Boolean(document.referrer) && new URL(document.referrer).origin === window.location.origin;
+    } catch (error) {
+      sameOriginReferrer = false;
+    }
+
+    const navigationEntry = window.performance?.getEntriesByType?.('navigation')?.[0];
+    const hardReload = navigationEntry?.type === 'reload';
+    const shortTransition = desktopLoader
+      ? returningVisit && sameOriginReferrer && !hardReload
+      : returningVisit;
+    const failSafe = window.setTimeout(() => finishLoader(loader), shortTransition ? 1200 : (desktopLoader ? 3600 : 3200));
 
     if (reduceMotion || !gsapReady) {
       window.setTimeout(() => {
@@ -52,17 +66,111 @@
       return;
     }
 
-    if (returningVisit) {
-      window.gsap.timeline({
+    if (shortTransition) {
+      const shortTimeline = window.gsap.timeline({
         defaults: { ease: 'power3.out' },
         onComplete: () => {
           window.clearTimeout(failSafe);
           finishLoader(loader);
         }
-      })
+      });
+
+      shortTimeline
         .from('.loader__word span', { yPercent: 90, opacity: 0, duration: 0.32, stagger: 0.025 })
-        .to('[data-loader-line]', { scaleX: 1, duration: 0.45, ease: 'power1.inOut' }, 0)
-        .to(loader, { yPercent: -100, duration: 0.48, ease: 'power4.inOut' }, 0.42);
+        .to('[data-loader-line]', { scaleX: 1, duration: 0.45, ease: 'power1.inOut' }, 0);
+      if (desktopLoader) {
+        shortTimeline.call(() => window.dispatchEvent(new CustomEvent('wara:hero-reveal')), null, 0.36);
+      }
+      shortTimeline.to(loader, { yPercent: -100, duration: 0.48, ease: 'power4.inOut' }, 0.42);
+      return;
+    }
+
+    if (desktopLoader) {
+      const counter = { value: 0 };
+      const panels = window.gsap.utils.toArray('.loader__paper-panel');
+      const timeline = window.gsap.timeline({
+        defaults: { ease: 'power4.out' },
+        onComplete: () => {
+          window.clearTimeout(failSafe);
+          finishLoader(loader);
+        }
+      });
+
+      timeline
+        .set(loader, { clipPath: 'inset(0% 0% 0% 0%)' })
+        .from(panels, {
+          scaleY: 0,
+          transformOrigin: (index) => index % 2 === 0 ? 'top' : 'bottom',
+          duration: 0.82,
+          stagger: 0.055
+        }, 0)
+        .from('.loader__top span, .loader__bottom span', {
+          y: 16,
+          opacity: 0,
+          duration: 0.58,
+          stagger: 0.045
+        }, 0.08)
+        .from('.loader__word span', {
+          yPercent: 125,
+          opacity: 0,
+          rotation: (index) => index % 2 === 0 ? -3 : 3,
+          duration: 0.82,
+          stagger: 0.06
+        }, 0.1)
+        .from('[data-loader-sun]', {
+          scale: 0.45,
+          rotation: -24,
+          opacity: 0,
+          duration: 1
+        }, 0.12)
+        .to('[data-loader-route]', {
+          strokeDashoffset: 0,
+          duration: 1.45,
+          ease: 'power2.inOut'
+        }, 0.12)
+        .from('[data-loader-route-dot]', {
+          scale: 0,
+          opacity: 0,
+          duration: 0.45,
+          ease: 'back.out(1.8)'
+        }, 1.22)
+        .to(counter, {
+          value: 100,
+          duration: 1.5,
+          ease: 'power1.inOut',
+          onUpdate: () => {
+            if (count) count.textContent = String(Math.round(counter.value)).padStart(3, '0');
+          }
+        }, 0.12)
+        .to('[data-loader-line]', {
+          scaleX: 1,
+          duration: 1.5,
+          ease: 'power1.inOut'
+        }, 0.12)
+        .to('.loader__word span', {
+          yPercent: -125,
+          opacity: 0,
+          duration: 0.55,
+          stagger: 0.035,
+          ease: 'power3.in'
+        }, 1.35)
+        .to('.loader__top, .loader__bottom, .loader__route-map, .loader__sun', {
+          opacity: 0,
+          duration: 0.32,
+          ease: 'power2.in'
+        }, 1.65)
+        .call(() => window.dispatchEvent(new CustomEvent('wara:hero-reveal')), null, 1.7)
+        .to(panels, {
+          yPercent: (index) => index % 2 === 0 ? -105 : 105,
+          duration: 0.82,
+          stagger: 0.04,
+          ease: 'power4.inOut'
+        }, 1.72)
+        .to(loader, {
+          clipPath: 'inset(0% 0% 100% 0%)',
+          duration: 0.82,
+          ease: 'power4.inOut'
+        }, 1.78);
       return;
     }
 
@@ -241,7 +349,9 @@
 
     const hero = document.querySelector('[data-hero]');
     if (hero) {
-      gsap.timeline({ delay: 0.15 })
+      const loader = document.querySelector('[data-loader]');
+      const holdDesktopHero = !isSmall && loader && loader.dataset.finished !== 'true';
+      const heroTimeline = gsap.timeline({ delay: holdDesktopHero ? 0 : 0.15, paused: holdDesktopHero })
         .from('.site-header__inner', { y: -24, opacity: 0, duration: 0.75 })
         .from('.hero__meta span', { y: 18, opacity: 0, duration: 0.7, stagger: 0.06 }, 0.08)
         .from('.hero__drop', { x: -28, opacity: 0, duration: 0.8 }, 0.12)
@@ -254,15 +364,45 @@
         .from('.hero__statement > *', { y: 28, opacity: 0, duration: 0.85, stagger: 0.08 }, 0.62)
         .from('.hero__footer span', { y: 12, opacity: 0, duration: 0.6, stagger: 0.05 }, 0.85)
         .from('.hero__media', { clipPath: 'inset(0 0 100% 0)', scale: 1.08, duration: 1.3, ease: 'power4.inOut' }, 0.08);
+
+      if (holdDesktopHero) {
+        let heroStarted = false;
+        const startHero = () => {
+          if (heroStarted) return;
+          heroStarted = true;
+          heroTimeline.play(0);
+        };
+        window.addEventListener('wara:hero-reveal', startHero, { once: true });
+        window.addEventListener('wara:ready', startHero, { once: true });
+      }
     } else {
-      gsap.from('.site-header__inner', { y: -20, opacity: 0, duration: 0.65, ease: 'power3.out' });
-      gsap.from('.page-hero__title > span, .page-hero__lead', {
-        yPercent: 70,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.08,
-        ease: 'power4.out'
-      });
+      const pageHero = document.querySelector('.page-hero');
+      const pageHeroRoute = pageHero?.querySelector('.page-hero__route');
+      const pageHeroLead = pageHero?.querySelector('.page-hero__lead');
+      const pageTimeline = gsap.timeline({ defaults: { ease: 'power4.out' } })
+        .from('.site-header__inner', { y: -20, opacity: 0, duration: 0.65 });
+
+      if (pageHero) {
+        pageTimeline
+          .from(pageHero.querySelectorAll('.page-hero__meta > *'), { y: 16, opacity: 0, duration: 0.65, stagger: 0.05 }, 0.08);
+        if (pageHeroRoute) pageTimeline.from(pageHeroRoute, { scale: 0.82, rotation: -20, opacity: 0, duration: 1.1 }, 0.06);
+        pageTimeline.from(pageHero.querySelectorAll('.page-hero__title > span'), { yPercent: 70, opacity: 0, duration: 1 }, 0.18);
+        if (pageHeroLead) pageTimeline.from(pageHeroLead, { y: 26, opacity: 0, duration: 0.8 }, 0.46);
+      }
+
+      if (!isSmall && pageHeroRoute) {
+        gsap.to(pageHeroRoute, {
+          yPercent: 12,
+          rotation: -6,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: pageHero,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: 0.8
+          }
+        });
+      }
     }
 
     if (!isSmall) {
@@ -305,6 +445,19 @@
       gsap.to('.hero__wave', {
         xPercent: -24,
         rotation: -3,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '[data-hero]',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 0.9
+        }
+      });
+
+      gsap.to('.hero__brush', {
+        xPercent: 7,
+        yPercent: -10,
+        rotation: 2,
         ease: 'none',
         scrollTrigger: {
           trigger: '[data-hero]',
@@ -388,18 +541,22 @@
       });
     }
 
-    gsap.from('.product-card', {
-      y: 70,
-      opacity: 0,
-      duration: 1,
-      stagger: 0.1,
-      ease: 'power4.out',
-      scrollTrigger: {
-        trigger: '[data-product-grid]',
-        start: 'top 78%',
-        once: true
-      }
-    });
+    const homepageCards = document.querySelectorAll('.product-card');
+    const homepageGrid = document.querySelector('[data-product-grid]');
+    if (homepageCards.length && homepageGrid) {
+      gsap.from(homepageCards, {
+        y: 70,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.1,
+        ease: 'power4.out',
+        scrollTrigger: {
+          trigger: homepageGrid,
+          start: 'top 78%',
+          once: true
+        }
+      });
+    }
 
     const currentLook = document.querySelector('[data-lookbook-current]');
     document.querySelectorAll('[data-lookbook-card]').forEach((card, index, cards) => {

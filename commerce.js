@@ -53,6 +53,33 @@
     `;
   };
 
+  const animateCommerceGrid = (grid, initialRender) => {
+    if (!window.gsap || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const cards = Array.from(grid.querySelectorAll('.commerce-card'));
+    if (!cards.length) return;
+
+    const compact = window.matchMedia('(max-width: 820px)').matches;
+    const animation = {
+      y: initialRender ? (compact ? 24 : 56) : 18,
+      opacity: 0,
+      scale: initialRender && !compact ? 0.985 : 1,
+      duration: compact ? 0.65 : 0.9,
+      stagger: compact ? 0.035 : 0.07,
+      ease: 'power4.out',
+      clearProps: 'transform,opacity'
+    };
+
+    if (initialRender && window.ScrollTrigger) {
+      animation.scrollTrigger = {
+        trigger: grid,
+        start: 'top 82%',
+        once: true
+      };
+    }
+
+    window.gsap.from(cards, animation);
+  };
+
   const updateCartCount = () => {
     const count = WARA.cartCount();
     document.querySelectorAll('[data-cart-count]').forEach((element) => {
@@ -102,6 +129,7 @@
     const collection = document.querySelector('[data-collection-select]');
     const sort = document.querySelector('[data-sort]');
     let activeCategory = 'All';
+    let hasRendered = false;
 
     const render = () => {
       let visible = WARA.products.filter((product) => (
@@ -115,6 +143,8 @@
 
       grid.innerHTML = visible.map(productCard).join('');
       if (count) count.textContent = `${visible.length} piece${visible.length === 1 ? '' : 's'}`;
+      window.requestAnimationFrame(() => animateCommerceGrid(grid, !hasRendered));
+      hasRendered = true;
     };
 
     filters.forEach((filter) => {
