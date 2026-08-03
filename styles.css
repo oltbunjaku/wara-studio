@@ -300,6 +300,161 @@ button {
   display: block;
 }
 
+@media (min-width: 821px) {
+  .loader__word {
+    display: grid;
+    width: 100%;
+    padding-block: 0.08em;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-items: center;
+    justify-items: center;
+    overflow: hidden;
+    font-size: clamp(9rem, min(20vw, 40vh), 28rem);
+    letter-spacing: -0.08em;
+    line-height: 0.88;
+  }
+
+  .loader__word span {
+    display: grid;
+    width: 100%;
+    place-items: center;
+  }
+
+  html.js:not(.wara-loader-gsap) body.is-loading .loader__paper-panel {
+    transform: scaleY(0);
+  }
+
+  html.js:not(.wara-loader-gsap) body.is-loading .loader__paper-panel:nth-child(odd) {
+    transform-origin: top;
+  }
+
+  html.js:not(.wara-loader-gsap) body.is-loading .loader__paper-panel:nth-child(even) {
+    transform-origin: bottom;
+  }
+
+  html.js:not(.wara-loader-gsap) body.is-loading .loader__word span {
+    opacity: 0;
+    transform: translateY(125%);
+  }
+
+  html.js:not(.wara-loader-gsap) body.is-loading .loader__top span,
+  html.js:not(.wara-loader-gsap) body.is-loading .loader__bottom span {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+
+  html.js:not(.wara-loader-gsap) body.is-loading .loader__sun,
+  html.js:not(.wara-loader-gsap) body.is-loading .loader__route-dot {
+    opacity: 0;
+    transform: scale(0.45);
+  }
+}
+
+.loader--fallback .loader__paper-panel {
+  animation: loader-fallback-panel-in 0.62s var(--ease) forwards;
+}
+
+.loader--fallback .loader__paper-panel:nth-child(2) {
+  animation-delay: 0.06s;
+}
+
+.loader--fallback .loader__paper-panel:nth-child(3) {
+  animation-delay: 0.12s;
+}
+
+.loader--fallback .loader__paper-panel:nth-child(4) {
+  animation-delay: 0.18s;
+}
+
+.loader--fallback .loader__word span {
+  animation: loader-fallback-word-in 0.58s var(--ease) forwards;
+}
+
+.loader--fallback .loader__word span:nth-child(2) {
+  animation-delay: 0.05s;
+}
+
+.loader--fallback .loader__word span:nth-child(3) {
+  animation-delay: 0.1s;
+}
+
+.loader--fallback .loader__word span:nth-child(4) {
+  animation-delay: 0.15s;
+}
+
+.loader--fallback .loader__top span,
+.loader--fallback .loader__bottom span,
+.loader--fallback .loader__sun,
+.loader--fallback .loader__route-dot {
+  animation: loader-fallback-fade-in 0.46s ease-out 0.12s forwards;
+}
+
+.loader--fallback [data-loader-route] {
+  animation: loader-fallback-route 0.95s ease-in-out 0.08s forwards;
+}
+
+.loader--fallback [data-loader-line] {
+  animation: loader-fallback-progress 0.95s linear forwards;
+}
+
+.loader--fallback-out .loader__paper-panel:nth-child(odd) {
+  animation: loader-fallback-panel-up 0.44s var(--ease-in-out) forwards;
+}
+
+.loader--fallback-out .loader__paper-panel:nth-child(even) {
+  animation: loader-fallback-panel-down 0.44s var(--ease-in-out) forwards;
+}
+
+.loader--fallback-out .loader__word,
+.loader--fallback-out .loader__top,
+.loader--fallback-out .loader__bottom,
+.loader--fallback-out .loader__route-map,
+.loader--fallback-out .loader__sun {
+  animation: loader-fallback-fade-out 0.24s ease-in forwards;
+}
+
+.loader--reduced .loader__paper-panel,
+.loader--reduced .loader__word span,
+.loader--reduced .loader__top span,
+.loader--reduced .loader__bottom span,
+.loader--reduced .loader__sun,
+.loader--reduced .loader__route-dot {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+@keyframes loader-fallback-panel-in {
+  to { transform: scaleY(1); }
+}
+
+@keyframes loader-fallback-word-in {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes loader-fallback-fade-in {
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes loader-fallback-route {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes loader-fallback-progress {
+  to { transform: scaleX(1); }
+}
+
+@keyframes loader-fallback-panel-up {
+  to { transform: translateY(-105%); }
+}
+
+@keyframes loader-fallback-panel-down {
+  to { transform: translateY(105%); }
+}
+
+@keyframes loader-fallback-fade-out {
+  to { opacity: 0; }
+}
+
 .loader__location-desktop,
 .loader__route-map,
 .loader__sun {

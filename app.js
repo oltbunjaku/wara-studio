@@ -1,9 +1,21 @@
 (() => {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const coarsePointer = window.matchMedia('(pointer: coarse)').matches;
-  const gsapReady = Boolean(window.gsap && window.ScrollTrigger);
+  let gsapReady = false;
 
-  if (gsapReady) window.gsap.registerPlugin(window.ScrollTrigger);
+  if (window.gsap && window.ScrollTrigger) {
+    try {
+      window.gsap.registerPlugin(window.ScrollTrigger);
+      gsapReady = typeof window.gsap.timeline === 'function'
+        && typeof window.ScrollTrigger.create === 'function'
+        && window.gsap.core.globals().ScrollTrigger === window.ScrollTrigger;
+    } catch (error) {
+      gsapReady = false;
+      console.warn('WARA motion engine registration failed; using the CSS loader fallback.');
+    }
+  }
+
+  document.documentElement.dataset.motionEngine = gsapReady ? 'gsap' : 'css';
 
   const finishLoader = (loader) => {
     if (loader.dataset.finished === 'true') return;
@@ -47,13 +59,70 @@
     }
 
     const shortTransition = !desktopLoader && returningVisit;
-    const failSafe = window.setTimeout(() => finishLoader(loader), shortTransition ? 1200 : (desktopLoader ? 3800 : 3200));
+    const failSafeDuration = !gsapReady ? 2200 : (shortTransition ? 1200 : (desktopLoader ? 3900 : 3200));
+    const failSafe = window.setTimeout(() => finishLoader(loader), failSafeDuration);
 
-    if (reduceMotion || !gsapReady) {
+    const runCssFallback = () => {
+      const startedAt = window.performance.now();
+      const counterDuration = 950;
+      loader.classList.add('loader--fallback');
+
+      const updateCounter = (now) => {
+        const progress = Math.min(1, (now - startedAt) / counterDuration);
+        if (count) count.textContent = String(Math.round(progress * 100)).padStart(3, '0');
+        if (progress < 1) window.requestAnimationFrame(updateCounter);
+      };
+
+      window.requestAnimationFrame(updateCounter);
+      window.setTimeout(() => {
+        if (count) count.textContent = '100';
+        window.dispatchEvent(new CustomEvent('wara:hero-reveal'));
+        loader.classList.add('loader--fallback-out');
+      }, 1050);
       window.setTimeout(() => {
         window.clearTimeout(failSafe);
         finishLoader(loader);
-      }, reduceMotion ? 120 : 900);
+      }, 1500);
+    };
+
+    if (!gsapReady) {
+      runCssFallback();
+      return;
+    }
+
+    document.documentElement.classList.add('wara-loader-gsap');
+
+    if (reduceMotion) {
+      const counter = { value: 0 };
+      loader.classList.add('loader--reduced');
+      window.gsap.set('.loader__word span, .loader__top span, .loader__bottom span, [data-loader-route], [data-loader-route-dot], [data-loader-sun]', { clearProps: 'all' });
+      window.gsap.set('.loader__paper-panel', { scaleY: 1 });
+      window.gsap.set('.loader__word span', { x: 0, y: 0, yPercent: 0, rotation: 0, opacity: 1 });
+      window.gsap.set('.loader__top span, .loader__bottom span', { y: 0, opacity: 1 });
+      window.gsap.set('[data-loader-route]', { strokeDashoffset: 0 });
+      window.gsap.set('[data-loader-route-dot], [data-loader-sun]', { scale: 1, opacity: 1 });
+
+      const reducedTimeline = window.gsap.timeline({
+        defaults: { ease: 'power1.out' },
+        onComplete: () => {
+          if (count) count.textContent = '100';
+          window.clearTimeout(failSafe);
+          finishLoader(loader);
+        }
+      });
+
+      reducedTimeline
+        .to(counter, {
+          value: 100,
+          duration: 0.68,
+          ease: 'none',
+          onUpdate: () => {
+            if (count) count.textContent = String(Math.round(counter.value)).padStart(3, '0');
+          }
+        }, 0)
+        .to('[data-loader-line]', { scaleX: 1, duration: 0.68, ease: 'none' }, 0)
+        .call(() => window.dispatchEvent(new CustomEvent('wara:hero-reveal')), null, 0.62)
+        .to(loader, { opacity: 0, duration: 0.24, ease: 'power1.inOut' }, 0.64);
       return;
     }
 
@@ -95,39 +164,52 @@
 
       timeline
         .set(loader, { clipPath: 'inset(0% 0% 0% 0%)' })
-        .from(panels, {
+        .fromTo(panels, {
           scaleY: 0,
-          transformOrigin: (index) => index % 2 === 0 ? 'top' : 'bottom',
+          transformOrigin: (index) => index % 2 === 0 ? 'top' : 'bottom'
+        }, {
+          scaleY: 1,
           duration: 0.82,
           stagger: 0.055
         }, 0)
-        .from('.loader__top span, .loader__bottom span', {
+        .fromTo('.loader__top span, .loader__bottom span', {
           y: 16,
-          opacity: 0,
+          opacity: 0
+        }, {
+          y: 0,
+          opacity: 1,
           duration: 0.58,
           stagger: 0.045
         }, 0.08)
-        .from('.loader__word span', {
+        .fromTo('.loader__word span', {
           yPercent: 125,
           opacity: 0,
-          rotation: (index) => index % 2 === 0 ? -3 : 3,
+          rotation: (index) => index % 2 === 0 ? -3 : 3
+        }, {
+          yPercent: 0,
+          opacity: 1,
+          rotation: 0,
           duration: 0.82,
           stagger: 0.06
         }, 0.1)
-        .from('[data-loader-sun]', {
+        .fromTo('[data-loader-sun]', {
           scale: 0.45,
           rotation: -24,
-          opacity: 0,
+          opacity: 0
+        }, {
+          scale: 1,
+          rotation: 0,
+          opacity: 1,
           duration: 1
         }, 0.12)
-        .to('[data-loader-route]', {
+        .fromTo('[data-loader-route]', { strokeDashoffset: 1 }, {
           strokeDashoffset: 0,
           duration: 1.45,
           ease: 'power2.inOut'
         }, 0.12)
-        .from('[data-loader-route-dot]', {
-          scale: 0,
-          opacity: 0,
+        .fromTo('[data-loader-route-dot]', { scale: 0, opacity: 0 }, {
+          scale: 1,
+          opacity: 1,
           duration: 0.45,
           ease: 'back.out(1.8)'
         }, 1.22)
