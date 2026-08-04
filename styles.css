@@ -1,18 +1,18 @@
 :root {
   color-scheme: dark;
-  --sail-cream: #f3e6c8;
-  --sun-red: #d94a38;
-  --ocean-blue: #1e5b8c;
-  --mustard: #d8a23a;
-  --sea-teal: #2f7c78;
-  --ink: #171717;
-  --ink-soft: #23211e;
-  --paper: #f3e6c8;
-  --weathered-white: #f7f3e8;
-  --paper-muted: #d8cfbc;
-  --red: #d94a38;
-  --line-light: rgba(247, 243, 232, 0.3);
-  --line-dark: rgba(23, 23, 23, 0.24);
+  --sail-cream: #ede2c8;
+  --sun-red: #d85a46;
+  --ocean-blue: #2d6da3;
+  --mustard: #d7a544;
+  --sea-teal: #4b8b84;
+  --ink: #222222;
+  --ink-soft: #2c2c2c;
+  --paper: #ede2c8;
+  --weathered-white: #f7f1e6;
+  --paper-muted: #d8ceb8;
+  --red: #d85a46;
+  --line-light: rgba(247, 241, 230, 0.32);
+  --line-dark: rgba(34, 34, 34, 0.24);
   --display: "Outfit", "Arial Narrow", "Helvetica Neue Condensed", sans-serif;
   --sans: "Outfit", "Helvetica Neue", Arial, sans-serif;
   --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
@@ -366,7 +366,7 @@ button {
   stroke-linecap: square;
   stroke-linejoin: bevel;
   vector-effect: non-scaling-stroke;
-  filter: drop-shadow(0 2px 0 rgba(23, 23, 23, 0.72));
+  filter: drop-shadow(0 2px 0 rgba(34, 34, 34, 0.68));
 }
 
 @media (min-width: 821px) {
@@ -590,7 +590,7 @@ button {
 .cursor.is-active {
   width: 4.25rem;
   height: 4.25rem;
-  background: rgba(241, 238, 230, 0.14);
+  background: rgba(247, 241, 230, 0.14);
 }
 
 .cursor.is-active span {
@@ -607,7 +607,7 @@ button {
   left: 0;
   min-height: var(--header);
   border-bottom: 1px solid transparent;
-  background: linear-gradient(to bottom, rgba(10, 10, 9, 0.7), transparent);
+  background: linear-gradient(to bottom, rgba(34, 34, 34, 0.62), transparent);
   color: var(--paper);
   transition:
     background-color var(--base) ease,
@@ -787,8 +787,8 @@ button {
   z-index: -2;
   inset: 0;
   background:
-    linear-gradient(90deg, var(--ink) 0 42%, rgba(10, 10, 9, 0.58) 67%, rgba(10, 10, 9, 0.2)),
-    linear-gradient(to top, rgba(10, 10, 9, 0.68), transparent 40%);
+    linear-gradient(90deg, var(--ink) 0 42%, rgba(34, 34, 34, 0.54) 67%, rgba(34, 34, 34, 0.16)),
+    linear-gradient(to top, rgba(34, 34, 34, 0.62), transparent 40%);
 }
 
 .hero__grain {
@@ -1051,7 +1051,7 @@ button {
 .products__header > p {
   max-width: 32rem;
   margin: 0;
-  color: rgba(10, 10, 9, 0.68);
+  color: rgba(34, 34, 34, 0.68);
   font-size: 0.86rem;
   line-height: 1.65;
 }
@@ -1155,7 +1155,7 @@ button {
 }
 
 .product-card__info small {
-  color: rgba(10, 10, 9, 0.52);
+  color: rgba(34, 34, 34, 0.58);
   font-size: 0.56rem;
 }
 
@@ -1338,7 +1338,7 @@ button {
 .lookbook-card__wash {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(10, 10, 9, 0.72), transparent 45%);
+  background: linear-gradient(to top, rgba(34, 34, 34, 0.68), transparent 45%);
 }
 
 .lookbook-card__meta {
@@ -1539,7 +1539,7 @@ button {
     bottom: clamp(0.75rem, 1.2vw, 1.25rem);
     left: clamp(0.75rem, 1.2vw, 1.25rem);
     padding: 0.65rem 0.75rem;
-    background: rgba(23, 23, 23, 0.78);
+    background: rgba(34, 34, 34, 0.78);
     color: var(--weathered-white);
     backdrop-filter: blur(8px);
   }
@@ -1579,7 +1579,7 @@ button {
   gap: 2rem;
   margin-bottom: clamp(6rem, 12vw, 12rem);
   padding-bottom: 1rem;
-  border-bottom: 1px solid rgba(241, 238, 230, 0.34);
+  border-bottom: 1px solid rgba(247, 241, 230, 0.34);
 }
 
 .manifesto__body {
@@ -1674,7 +1674,7 @@ button {
 }
 
 .newsletter__form input::placeholder {
-  color: rgba(10, 10, 9, 0.4);
+  color: rgba(34, 34, 34, 0.46);
 }
 
 .newsletter__form button {
@@ -1694,7 +1694,7 @@ button {
 
 .newsletter__form > p {
   margin: 1rem 0 0;
-  color: rgba(10, 10, 9, 0.58);
+  color: rgba(34, 34, 34, 0.62);
   font-family: var(--mono);
   font-size: 0.58rem;
   letter-spacing: 0.05em;
@@ -1818,8 +1818,8 @@ button {
 
   .hero__wash {
     background:
-      linear-gradient(90deg, var(--ink) 0 25%, rgba(10, 10, 9, 0.48) 75%),
-      linear-gradient(to top, rgba(10, 10, 9, 0.82), transparent 60%);
+      linear-gradient(90deg, var(--ink) 0 25%, rgba(34, 34, 34, 0.44) 75%),
+      linear-gradient(to top, rgba(34, 34, 34, 0.78), transparent 60%);
   }
 
   .hero__meta span:nth-child(2) {
@@ -1962,8 +1962,8 @@ button {
 
   .hero__wash {
     background:
-      linear-gradient(to right, rgba(10, 10, 9, 0.68), rgba(10, 10, 9, 0.22)),
-      linear-gradient(to top, rgba(10, 10, 9, 0.92), transparent 72%);
+      linear-gradient(to right, rgba(34, 34, 34, 0.64), rgba(34, 34, 34, 0.18)),
+      linear-gradient(to top, rgba(34, 34, 34, 0.88), transparent 72%);
   }
 
   .hero__composition {
@@ -2246,18 +2246,18 @@ button {
 
 .site-header {
   color: var(--ink);
-  background: linear-gradient(to bottom, rgba(243, 230, 200, 0.9), rgba(243, 230, 200, 0));
+  background: linear-gradient(to bottom, rgba(237, 226, 200, 0.9), rgba(237, 226, 200, 0));
 }
 
 .site-header.is-scrolled,
 .site-header.is-open {
-  border-color: rgba(247, 243, 232, 0.22);
+  border-color: rgba(247, 241, 230, 0.22);
   background: var(--ink);
   color: var(--weathered-white);
 }
 
 .site-header:not(.is-scrolled):not(.is-open) .brand__origin {
-  color: rgba(23, 23, 23, 0.62);
+  color: rgba(34, 34, 34, 0.62);
 }
 
 .hero {
@@ -2275,7 +2275,7 @@ button {
   position: absolute;
   inset: 0;
   content: "";
-  background: linear-gradient(145deg, rgba(216, 162, 58, 0.3), transparent 35%, rgba(30, 91, 140, 0.58));
+  background: linear-gradient(145deg, rgba(215, 165, 68, 0.28), transparent 35%, rgba(45, 109, 163, 0.52));
   mix-blend-mode: color;
 }
 
@@ -2285,8 +2285,8 @@ button {
 
 .hero__wash {
   background:
-    linear-gradient(90deg, var(--sail-cream) 0 37%, rgba(243, 230, 200, 0.9) 49%, rgba(243, 230, 200, 0.08) 74%),
-    linear-gradient(to top, rgba(23, 23, 23, 0.32), transparent 42%);
+    linear-gradient(90deg, var(--sail-cream) 0 37%, rgba(237, 226, 200, 0.9) 49%, rgba(237, 226, 200, 0.08) 74%),
+    linear-gradient(to top, rgba(34, 34, 34, 0.28), transparent 42%);
 }
 
 .hero__grain {
@@ -2308,10 +2308,10 @@ button {
   left: 8%;
   width: clamp(8rem, 14vw, 15rem);
   aspect-ratio: 1;
-  border: 1px solid rgba(23, 23, 23, 0.2);
+  border: 1px solid rgba(34, 34, 34, 0.2);
   border-radius: 50%;
   background: var(--mustard);
-  box-shadow: inset 0 0 0 1.4rem rgba(243, 230, 200, 0.2);
+  box-shadow: inset 0 0 0 1.4rem rgba(237, 226, 200, 0.2);
 }
 
 .hero__wave {
@@ -2376,7 +2376,7 @@ button {
 .hero__meta span:last-child,
 .hero__footer > span:last-child {
   color: var(--weathered-white);
-  text-shadow: 0 1px 12px rgba(23, 23, 23, 0.5);
+  text-shadow: 0 1px 12px rgba(34, 34, 34, 0.46);
 }
 
 .hero__media .image-label {
@@ -2404,7 +2404,7 @@ button {
   position: relative;
   z-index: 3;
   color: var(--ink);
-  text-shadow: 1px 1px 0 rgba(23, 23, 23, 0.18);
+  text-shadow: 1px 1px 0 rgba(34, 34, 34, 0.18);
 }
 
 .hero__colour-layer {
@@ -2454,7 +2454,7 @@ button {
 }
 
 .hero .scroll-cue i {
-  background: rgba(23, 23, 23, 0.4);
+  background: rgba(34, 34, 34, 0.36);
 }
 
 .hero .image-label {
@@ -2496,12 +2496,14 @@ button {
 
 .chapter--campaign-red {
   background: var(--sun-red);
-  color: var(--weathered-white);
+  background: color-mix(in srgb, var(--sun-red) 86%, var(--sail-cream));
+  color: var(--ink);
 }
 
 .chapter--teal {
   background: var(--sea-teal);
-  color: var(--weathered-white);
+  background: color-mix(in srgb, var(--sea-teal) 86%, var(--sail-cream));
+  color: var(--ink);
 }
 
 .chapter--mustard {
@@ -2564,17 +2566,17 @@ button {
 }
 
 .drop-intro__details {
-  border-color: rgba(23, 23, 23, 0.3);
+  border-color: rgba(34, 34, 34, 0.3);
 }
 
 .products__header > p {
-  color: rgba(247, 243, 232, 0.74);
+  color: rgba(247, 241, 230, 0.76);
 }
 
 .product-grid {
   border-color: var(--weathered-white);
-  background: rgba(247, 243, 232, 0.65);
-  box-shadow: 1.1rem 1.1rem 0 rgba(23, 23, 23, 0.2);
+  background: rgba(247, 241, 230, 0.68);
+  box-shadow: 1.1rem 1.1rem 0 rgba(34, 34, 34, 0.18);
 }
 
 .product-card {
@@ -2598,18 +2600,18 @@ button {
 }
 
 .product-card:nth-child(3) .product-card__info {
-  background: var(--sun-red);
-  color: var(--weathered-white);
+  background: color-mix(in srgb, var(--sun-red) 84%, var(--sail-cream));
+  color: var(--ink);
 }
 
 .product-card:nth-child(4) .product-card__info {
-  background: var(--sea-teal);
-  color: var(--weathered-white);
+  background: color-mix(in srgb, var(--sea-teal) 84%, var(--sail-cream));
+  color: var(--ink);
 }
 
 .product-card:nth-child(3) .product-card__info small,
 .product-card:nth-child(4) .product-card__info small {
-  color: rgba(247, 243, 232, 0.68);
+  color: rgba(34, 34, 34, 0.72);
 }
 
 .products .kicker {
@@ -2617,15 +2619,15 @@ button {
 }
 
 .editorial__copy .kicker {
-  color: var(--mustard);
+  color: var(--ink);
 }
 
 .editorial__copy > p:not(.kicker) {
-  color: rgba(247, 243, 232, 0.82);
+  color: rgba(34, 34, 34, 0.82);
 }
 
 .editorial__coordinates {
-  border-color: rgba(247, 243, 232, 0.42);
+  border-color: rgba(34, 34, 34, 0.42);
 }
 
 .editorial__image--primary {
@@ -2639,16 +2641,24 @@ button {
 }
 
 .editorial__image img {
-  filter: saturate(0.72) contrast(1.12) sepia(0.08) brightness(0.9);
+  filter: saturate(0.82) contrast(1.08) sepia(0.06) brightness(0.96);
+}
+
+.editorial__image--primary img {
+  object-position: 50% 50%;
+}
+
+.editorial__image--secondary img {
+  object-position: 68% 50%;
 }
 
 .editorial__vertical {
-  color: var(--sail-cream);
+  color: rgba(34, 34, 34, 0.72);
 }
 
 .lookbook {
   background:
-    linear-gradient(120deg, rgba(30, 91, 140, 0.16), transparent 32%),
+    linear-gradient(120deg, rgba(45, 109, 163, 0.2), transparent 32%),
     var(--ink);
 }
 
@@ -2662,7 +2672,7 @@ button {
 }
 
 .lookbook__rail {
-  border-color: rgba(247, 243, 232, 0.3);
+  border-color: rgba(247, 241, 230, 0.3);
 }
 
 .lookbook__rail i {
@@ -2670,7 +2680,7 @@ button {
 }
 
 .lookbook-card {
-  border: 1px solid rgba(247, 243, 232, 0.24);
+  border: 1px solid rgba(247, 241, 230, 0.24);
 }
 
 .lookbook-card:nth-child(4n + 1) {
@@ -2695,8 +2705,8 @@ button {
 
 .lookbook-card__wash {
   background:
-    linear-gradient(to top, rgba(23, 23, 23, 0.75), transparent 46%),
-    linear-gradient(135deg, rgba(30, 91, 140, 0.18), transparent 50%);
+    linear-gradient(to top, rgba(34, 34, 34, 0.72), transparent 46%),
+    linear-gradient(135deg, rgba(45, 109, 163, 0.22), transparent 50%);
 }
 
 .horizontal-gallery__header .kicker {
@@ -2704,11 +2714,11 @@ button {
 }
 
 .horizontal-gallery__header > p {
-  color: rgba(247, 243, 232, 0.78);
+  color: rgba(247, 241, 230, 0.8);
 }
 
 .horizontal-gallery__track {
-  background: rgba(247, 243, 232, 0.44);
+  background: rgba(247, 241, 230, 0.46);
 }
 
 .horizontal-item img {
@@ -2721,7 +2731,7 @@ button {
 }
 
 .manifesto__top {
-  border-color: rgba(23, 23, 23, 0.35);
+  border-color: rgba(34, 34, 34, 0.35);
 }
 
 .manifesto__text span {
@@ -2761,21 +2771,21 @@ button {
 }
 
 .newsletter__form input::placeholder {
-  color: rgba(247, 243, 232, 0.44);
+  color: rgba(247, 241, 230, 0.48);
 }
 
 .newsletter__form > p {
-  color: rgba(247, 243, 232, 0.58);
+  color: rgba(247, 241, 230, 0.62);
 }
 
 .site-footer {
   background:
-    linear-gradient(120deg, rgba(30, 91, 140, 0.15), transparent 35%),
+    linear-gradient(120deg, rgba(45, 109, 163, 0.2), transparent 35%),
     var(--ink);
 }
 
 .site-footer__top {
-  border-color: rgba(247, 243, 232, 0.25);
+  border-color: rgba(247, 241, 230, 0.25);
 }
 
 .site-footer__top .kicker {
@@ -2790,13 +2800,13 @@ button {
 }
 
 .site-footer__bottom {
-  border-color: rgba(247, 243, 232, 0.25);
+  border-color: rgba(247, 241, 230, 0.25);
 }
 
 @media (max-width: 820px) {
   .site-header:not(.is-scrolled):not(.is-open) {
     color: var(--weathered-white);
-    background: linear-gradient(to bottom, rgba(23, 23, 23, 0.48), transparent);
+    background: linear-gradient(to bottom, rgba(34, 34, 34, 0.44), transparent);
   }
 
   .hero__media {
@@ -2805,8 +2815,8 @@ button {
 
   .hero__wash {
     background:
-      linear-gradient(90deg, rgba(243, 230, 200, 0.96) 0 20%, rgba(243, 230, 200, 0.52) 55%, rgba(23, 23, 23, 0.08)),
-      linear-gradient(to top, rgba(243, 230, 200, 0.72), transparent 60%);
+      linear-gradient(90deg, rgba(237, 226, 200, 0.96) 0 20%, rgba(237, 226, 200, 0.52) 55%, rgba(34, 34, 34, 0.08)),
+      linear-gradient(to top, rgba(237, 226, 200, 0.72), transparent 60%);
   }
 
   .hero__route {
@@ -2820,7 +2830,7 @@ button {
   }
 
   .product-grid {
-    box-shadow: 0.65rem 0.65rem 0 rgba(23, 23, 23, 0.18);
+    box-shadow: 0.65rem 0.65rem 0 rgba(34, 34, 34, 0.16);
   }
 }
 
@@ -2831,13 +2841,13 @@ button {
   }
 
   .hero__media::after {
-    background: linear-gradient(145deg, rgba(216, 162, 58, 0.12), transparent 35%, rgba(30, 91, 140, 0.42));
+    background: linear-gradient(145deg, rgba(215, 165, 68, 0.14), transparent 35%, rgba(45, 109, 163, 0.42));
   }
 
   .hero__wash {
     background:
-      linear-gradient(to right, rgba(243, 230, 200, 0.75), rgba(243, 230, 200, 0.08)),
-      linear-gradient(to top, var(--sail-cream) 0, rgba(243, 230, 200, 0.15) 65%);
+      linear-gradient(to right, rgba(237, 226, 200, 0.75), rgba(237, 226, 200, 0.08)),
+      linear-gradient(to top, var(--sail-cream) 0, rgba(237, 226, 200, 0.15) 65%);
   }
 
   .hero__sun {
@@ -2871,7 +2881,7 @@ button {
 
   .hero__word {
     color: var(--weathered-white);
-    text-shadow: 0 1px 14px rgba(23, 23, 23, 0.4);
+    text-shadow: 0 1px 14px rgba(34, 34, 34, 0.38);
   }
 
   .hero__colour-layer--red {
@@ -2892,7 +2902,7 @@ button {
   .hero__drop,
   .hero__statement p {
     color: var(--weathered-white);
-    text-shadow: 0 1px 12px rgba(23, 23, 23, 0.38);
+    text-shadow: 0 1px 12px rgba(34, 34, 34, 0.36);
   }
 
   .archive-stamp {
@@ -2965,7 +2975,7 @@ button {
     z-index: 1;
     inset: 9vh 4vw 8vh;
     display: block;
-    color: rgba(23, 23, 23, 0.54);
+    color: rgba(34, 34, 34, 0.54);
     pointer-events: none;
   }
 
@@ -3000,10 +3010,10 @@ button {
     display: block;
     width: clamp(6rem, 10vw, 11rem);
     aspect-ratio: 1;
-    border: 1px solid rgba(23, 23, 23, 0.55);
+    border: 1px solid rgba(34, 34, 34, 0.52);
     border-radius: 50%;
-    background: rgba(216, 162, 58, 0.8);
-    box-shadow: inset 0 0 0 clamp(0.65rem, 1.2vw, 1.4rem) rgba(243, 230, 200, 0.22);
+    background: rgba(215, 165, 68, 0.82);
+    box-shadow: inset 0 0 0 clamp(0.65rem, 1.2vw, 1.4rem) rgba(237, 226, 200, 0.22);
     pointer-events: none;
   }
 }
@@ -3021,8 +3031,8 @@ button {
 .inner-page .site-header.is-scrolled,
 .inner-page .site-header.is-open {
   color: var(--weathered-white);
-  background: rgba(23, 23, 23, 0.94);
-  border-color: rgba(247, 243, 232, 0.22);
+  background: rgba(34, 34, 34, 0.94);
+  border-color: rgba(247, 241, 230, 0.22);
   backdrop-filter: blur(12px);
 }
 
@@ -3032,7 +3042,7 @@ button {
 
 .site-header--solid:not(.is-scrolled):not(.is-open) .brand__origin,
 .archive-page .site-header:not(.is-scrolled):not(.is-open) .brand__origin {
-  color: rgba(247, 243, 232, 0.68);
+  color: rgba(247, 241, 230, 0.7);
 }
 
 .archive-page .site-header:not(.is-scrolled):not(.is-open) {
@@ -3174,7 +3184,7 @@ button {
   left: 12%;
   width: 58%;
   height: 60%;
-  border: 2px dashed rgba(247, 243, 232, 0.42);
+  border: 2px dashed rgba(247, 241, 230, 0.42);
   border-right-color: transparent;
   border-bottom-color: transparent;
   border-radius: 50%;
@@ -3187,7 +3197,7 @@ button {
   top: var(--header);
   border-top: 1px solid var(--line-dark);
   border-bottom: 1px solid var(--line-dark);
-  background: rgba(243, 230, 200, 0.96);
+  background: rgba(237, 226, 200, 0.96);
   backdrop-filter: blur(12px);
 }
 
@@ -3389,7 +3399,7 @@ button {
 .product-swatch {
   width: 0.8rem;
   height: 0.8rem;
-  border: 1px solid rgba(23, 23, 23, 0.5);
+  border: 1px solid rgba(34, 34, 34, 0.48);
   background: var(--swatch);
 }
 
@@ -3445,7 +3455,7 @@ button {
 }
 
 .shop-field-note__image::after {
-  background: linear-gradient(90deg, rgba(23, 23, 23, 0.9), rgba(23, 23, 23, 0.05));
+  background: linear-gradient(90deg, rgba(34, 34, 34, 0.88), rgba(34, 34, 34, 0.05));
   content: "";
 }
 
@@ -3646,7 +3656,7 @@ button {
 .option-chip i {
   width: 0.75rem;
   height: 0.75rem;
-  border: 1px solid rgba(23, 23, 23, 0.5);
+  border: 1px solid rgba(34, 34, 34, 0.48);
   background: var(--swatch);
 }
 
@@ -3770,7 +3780,7 @@ button {
 }
 
 .size-guide::backdrop {
-  background: rgba(23, 23, 23, 0.72);
+  background: rgba(34, 34, 34, 0.7);
 }
 
 .size-guide > button {
@@ -4017,7 +4027,7 @@ button {
 }
 
 .archive-hero__wash {
-  background: linear-gradient(115deg, rgba(23, 23, 23, 0.9), rgba(30, 91, 140, 0.12) 70%), linear-gradient(to top, rgba(23, 23, 23, 0.52), transparent 55%);
+  background: linear-gradient(115deg, rgba(34, 34, 34, 0.86), rgba(45, 109, 163, 0.16) 70%), linear-gradient(to top, rgba(34, 34, 34, 0.48), transparent 55%);
 }
 
 .archive-hero__content {
@@ -4067,7 +4077,7 @@ button {
   flex: 1 1 0;
   min-width: 0;
   overflow: hidden;
-  border-right: 1px solid rgba(247, 243, 232, 0.35);
+  border-right: 1px solid rgba(247, 241, 230, 0.35);
   color: var(--weathered-white);
   cursor: crosshair;
   transition: flex 700ms var(--ease);
@@ -4096,7 +4106,7 @@ button {
   position: absolute;
   inset: auto 0 0;
   padding: 1.5rem;
-  background: linear-gradient(transparent, rgba(23, 23, 23, 0.92));
+  background: linear-gradient(transparent, rgba(34, 34, 34, 0.9));
 }
 
 .archive-slice span,

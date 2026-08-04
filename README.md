@@ -55,10 +55,10 @@ Current images are art-direction placeholders. Replace them with original WARA p
 - Hero: full-body or mid-body campaign portrait with negative space for the layered WARA title.
 - Drop 001 introduction: keep the canal, waterway or similarly strong travel image; it should remain atmospheric.
 - Featured products: Heavyweight Tee, Archive Hoodie, Transit Cargo and No Destination Jacket, each with primary and hover images.
-- Mitrovicë editorial: industrial architecture and close street detail.
+- Mitrovicë editorial: sunlit brutalist concrete geometry and a warm urban housing facade.
 - Lookbook preview: four consistent vertical model looks from one campaign.
 - Horizontal field archive: bridge or structure, road movement, distressed surface and night environment.
-- Manifesto: close human, hand or garment-construction detail.
+- Manifesto: fashion atelier with patterns, machines and garments in progress.
 
 ### Shared product catalog — `catalog.js`
 
