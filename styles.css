@@ -727,7 +727,22 @@ button {
   position: fixed;
   inset: var(--header) 0 0;
   padding: var(--gutter);
-  background: var(--ink);
+  overflow: hidden;
+  background: var(--ocean-blue);
+  color: var(--weathered-white);
+}
+
+.mobile-menu::before {
+  position: absolute;
+  right: -12%;
+  bottom: 13%;
+  width: 72%;
+  height: clamp(2rem, 10vw, 4.5rem);
+  background: var(--sun-red);
+  clip-path: polygon(0 18%, 17% 3%, 37% 26%, 58% 6%, 78% 31%, 100% 8%, 96% 78%, 73% 93%, 52% 69%, 31% 96%, 11% 72%, 0 86%);
+  content: "";
+  opacity: 0.82;
+  pointer-events: none;
 }
 
 .mobile-menu[hidden] {
@@ -735,6 +750,8 @@ button {
 }
 
 .mobile-menu nav {
+  position: relative;
+  z-index: 1;
   display: flex;
   height: calc(100% - 4rem);
   justify-content: center;
@@ -749,7 +766,22 @@ button {
   line-height: 0.85;
 }
 
+.mobile-menu:not([hidden]) nav a {
+  animation: mobile-menu-link-in 560ms var(--ease) both;
+}
+
+.mobile-menu:not([hidden]) nav a:nth-child(2) { animation-delay: 45ms; }
+.mobile-menu:not([hidden]) nav a:nth-child(3) { animation-delay: 90ms; }
+.mobile-menu:not([hidden]) nav a:nth-child(4) { animation-delay: 135ms; }
+
+@keyframes mobile-menu-link-in {
+  from { opacity: 0; transform: translateY(42%); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .mobile-menu__meta {
+  position: relative;
+  z-index: 1;
   display: flex;
   justify-content: space-between;
   gap: 2rem;
@@ -3022,7 +3054,7 @@ button {
 .header-archive[aria-current="page"],
 .mobile-menu a[aria-current="page"] {
   text-decoration: underline;
-  text-decoration-color: var(--sun-red);
+  text-decoration-color: var(--mustard);
   text-decoration-thickness: 0.16em;
   text-underline-offset: 0.35em;
 }
@@ -3038,6 +3070,12 @@ button {
 
 .site-header--solid .menu-toggle span {
   background: var(--weathered-white);
+}
+
+.site-header.is-open,
+.inner-page .site-header.is-open {
+  background: var(--ocean-blue);
+  backdrop-filter: none;
 }
 
 .site-header--solid:not(.is-scrolled):not(.is-open) .brand__origin,
@@ -3283,7 +3321,9 @@ button {
 }
 
 .commerce-card {
+  display: flex;
   grid-column: span 6;
+  flex-direction: column;
   background: var(--weathered-white);
   color: var(--ink);
 }
@@ -3292,12 +3332,8 @@ button {
   grid-column: span 4;
 }
 
-.commerce-card:nth-child(n+6):nth-child(-n+7) {
-  grid-column: span 6;
-}
-
-.commerce-card:nth-child(8) {
-  grid-column: span 12;
+.commerce-card:nth-child(n+6):nth-child(-n+8) {
+  grid-column: span 4;
 }
 
 .commerce-card__media {
@@ -3308,20 +3344,30 @@ button {
   background: var(--paper-muted);
 }
 
-.commerce-card:nth-child(2) .commerce-card__media,
-.commerce-card:nth-child(6) .commerce-card__media,
-.commerce-card:nth-child(7) .commerce-card__media,
-.commerce-card:nth-child(8) .commerce-card__media {
-  aspect-ratio: 16 / 11;
-}
-
 .commerce-card__media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: saturate(0.76) contrast(1.06);
+  filter: saturate(0.86) contrast(1.04) brightness(1.01);
   transition: opacity 700ms var(--ease), transform 900ms var(--ease);
 }
+
+.commerce-card[data-product-id="heavyweight-tee"] .commerce-card__media img,
+[data-product-page][data-product-id="heavyweight-tee"] .product-gallery__item img { object-position: 50% 30%; }
+.commerce-card[data-product-id="archive-hoodie"] .commerce-card__media img,
+[data-product-page][data-product-id="archive-hoodie"] .product-gallery__item img { object-position: 50% 28%; }
+.commerce-card[data-product-id="transit-cargo"] .commerce-card__media img,
+[data-product-page][data-product-id="transit-cargo"] .product-gallery__item img { object-position: 50% 24%; }
+.commerce-card[data-product-id="destination-jacket"] .commerce-card__media img,
+[data-product-page][data-product-id="destination-jacket"] .product-gallery__item img { object-position: 50% 30%; }
+.commerce-card[data-product-id="route-knit"] .commerce-card__media img,
+[data-product-page][data-product-id="route-knit"] .product-gallery__item img { object-position: 50% 38%; }
+.commerce-card[data-product-id="field-overshirt"] .commerce-card__media img,
+[data-product-page][data-product-id="field-overshirt"] .product-gallery__item img { object-position: 50% 32%; }
+.commerce-card[data-product-id="wara-cap"] .commerce-card__media img,
+[data-product-page][data-product-id="wara-cap"] .product-gallery__item img { object-position: 50% 28%; }
+.commerce-card[data-product-id="archive-bag"] .commerce-card__media img,
+[data-product-page][data-product-id="archive-bag"] .product-gallery__item img { object-position: 50% 50%; }
 
 .commerce-card__alternate {
   position: absolute;
@@ -3353,7 +3399,20 @@ button {
   text-transform: uppercase;
 }
 
+.commerce-card__status--coming-soon {
+  background: var(--mustard);
+  color: var(--ink);
+}
+
+.commerce-card__status--sold-out {
+  background: var(--sun-red);
+  color: var(--ink);
+}
+
 .commerce-card__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
   padding: 1.25rem;
 }
 
@@ -3372,12 +3431,14 @@ button {
 }
 
 .commerce-card__heading h2 {
+  min-height: 2.1em;
   font-weight: 800;
   letter-spacing: -0.04em;
   text-transform: uppercase;
 }
 
 .commerce-card__heading p {
+  font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
 
@@ -3396,6 +3457,15 @@ button {
   margin-top: 1rem;
 }
 
+.commerce-card__colour-list {
+  min-height: 2.4em;
+  margin: 0.6rem 0 1.25rem;
+  color: rgba(34, 34, 34, 0.68);
+  font: 700 0.55rem/1.35 var(--mono);
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+}
+
 .product-swatch {
   width: 0.8rem;
   height: 0.8rem;
@@ -3407,7 +3477,7 @@ button {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1px;
-  margin-top: 1.25rem;
+  margin-top: auto;
   background: var(--ink);
   border: 1px solid var(--ink);
 }
@@ -3431,8 +3501,13 @@ button {
 }
 
 .quick-add {
-  background: var(--ink);
+  background: var(--ocean-blue);
   color: var(--weathered-white);
+}
+
+.quick-add:hover:not(:disabled),
+.quick-add:focus-visible:not(:disabled) {
+  background: var(--sea-teal);
 }
 
 .quick-add:disabled {
@@ -3529,7 +3604,7 @@ button {
   height: 100%;
   min-height: 34rem;
   object-fit: cover;
-  filter: saturate(0.76) contrast(1.05);
+  filter: saturate(0.86) contrast(1.04) brightness(1.01);
   transition: transform 900ms var(--ease);
 }
 
@@ -3571,10 +3646,12 @@ button {
 
 .product-purchase h1 {
   margin: 1.5rem 0 0.75rem;
-  font-size: clamp(3.2rem, 6vw, 7rem);
+  overflow-wrap: break-word;
+  font-size: clamp(3.1rem, calc(1.3rem + 2.7vw), 5.1rem);
   font-weight: 900;
   letter-spacing: -0.075em;
   line-height: 0.84;
+  text-wrap: balance;
   text-transform: uppercase;
 }
 
@@ -3661,8 +3738,8 @@ button {
 }
 
 .option-chip input:checked + span {
-  border-color: var(--ink);
-  background: var(--ink);
+  border-color: var(--ocean-blue);
+  background: var(--ocean-blue);
   color: var(--weathered-white);
 }
 
@@ -3714,7 +3791,7 @@ button {
   padding: 1rem 1.25rem;
   border: 1px solid var(--ink);
   border-radius: 0;
-  background: var(--ink);
+  background: var(--ocean-blue);
   color: var(--weathered-white);
   font: 800 0.72rem/1 var(--mono);
   letter-spacing: 0.08em;
@@ -3730,8 +3807,14 @@ button {
 }
 
 .purchase-button:hover:not(:disabled) {
-  background: var(--sun-red);
+  background: var(--sea-teal);
   color: var(--weathered-white);
+}
+
+.purchase-button--unavailable {
+  border-color: var(--ink);
+  background: var(--ink);
+  cursor: help;
 }
 
 .purchase-button:disabled {
@@ -3854,7 +3937,7 @@ button {
 
 .page-hero--cart {
   min-height: 55vh;
-  background: var(--ink);
+  background: var(--ocean-blue);
   color: var(--weathered-white);
 }
 
@@ -3947,9 +4030,9 @@ button {
   position: sticky;
   top: calc(var(--header) + 2rem);
   padding: 2rem;
-  background: var(--mustard);
+  background: color-mix(in srgb, var(--sea-teal) 72%, var(--sail-cream));
   border: 1px solid var(--ink);
-  box-shadow: 0.65rem 0.65rem 0 var(--sun-red);
+  box-shadow: 0.65rem 0.65rem 0 var(--mustard);
 }
 
 .cart-summary > div {

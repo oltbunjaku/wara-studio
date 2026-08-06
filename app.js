@@ -912,7 +912,7 @@
         form.reportValidity();
         return;
       }
-      if (message) message.textContent = 'Prototype confirmation only. No address was stored.';
+      if (message) message.textContent = 'Transmission window opens with Drop 001.';
       form.reset();
     });
   };

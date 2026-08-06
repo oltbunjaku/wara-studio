@@ -3,14 +3,13 @@
   if (!WARA) return;
 
   const colourMap = {
-    'Weathered White': '#f7f3e8',
-    'Sail Cream': '#f3e6c8',
-    'Ink Black': '#171717',
-    'Sun-Faded Red': '#d94a38',
-    'Deep Ocean': '#1e5b8c',
-    'Sea Teal': '#2f7c78',
-    'Golden Mustard': '#d8a23a',
-    'Field Khaki': '#8d8065'
+    'Warm Sand': '#ede2c8',
+    'Soft Editorial Red': '#d85a46',
+    'Ocean Blue': '#2d6da3',
+    'Muted Mustard': '#d7a544',
+    'Sea Teal': '#4b8b84',
+    'Deep Charcoal': '#222222',
+    'Soft Off-White': '#f7f1e6'
   };
 
   const statusLabel = (status) => ({
@@ -28,11 +27,11 @@
   const productCard = (product, index = 0) => {
     const unavailable = product.status !== 'available';
     return `
-      <article class="commerce-card" data-category="${product.category}" data-collection="${product.collection}" style="--card-index:${index}">
+      <article class="commerce-card" data-product-id="${product.id}" data-category="${product.category}" data-collection="${product.collection}" style="--card-index:${index}">
         <a class="commerce-card__media" href="${productUrl(product.id)}" aria-label="View ${product.name}">
-          <img src="${product.images[0]}" alt="Campaign placeholder for ${product.name}" loading="lazy" decoding="async">
-          <img class="commerce-card__alternate" src="${product.images[1]}" alt="Alternate campaign placeholder for ${product.name}" loading="lazy" decoding="async">
-          ${statusLabel(product.status) ? `<span class="commerce-card__status">${statusLabel(product.status)}</span>` : ''}
+          <img src="${product.images[0]}" alt="${product.name} campaign view" loading="lazy" decoding="async">
+          <img class="commerce-card__alternate" src="${product.images[1]}" alt="${product.name} alternate view" loading="lazy" decoding="async">
+          ${statusLabel(product.status) ? `<span class="commerce-card__status commerce-card__status--${product.status}">${statusLabel(product.status)}</span>` : ''}
         </a>
         <div class="commerce-card__body">
           <div class="commerce-card__heading">
@@ -44,6 +43,7 @@
             <span>${product.collection}</span>
           </div>
           <div class="commerce-card__swatches" aria-label="Available colours">${swatches(product)}</div>
+          <p class="commerce-card__colour-list">${product.colours.join(' / ')}</p>
           <div class="commerce-card__actions">
             <a class="text-button" href="${productUrl(product.id)}">View product</a>
             <button class="quick-add" type="button" data-quick-add="${product.id}" ${unavailable ? 'disabled' : ''}>${unavailable ? statusLabel(product.status) : 'Quick add'}</button>
@@ -175,12 +175,13 @@
     const product = WARA.getProduct(requestedId) || WARA.products[0];
     const unavailable = product.status !== 'available';
     document.title = `${product.name} — WARA STUDIO`;
+    root.dataset.productId = product.id;
 
     root.innerHTML = `
       <div class="product-gallery" data-product-gallery>
         ${product.images.map((image, index) => `
           <figure class="product-gallery__item ${index === 0 ? 'product-gallery__item--primary' : ''}">
-            <img src="${image}" alt="${index === 0 ? 'Campaign' : `Detail ${index}`} placeholder for ${product.name}" ${index === 0 ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async">
+            <img src="${image}" alt="${product.name} ${index === 0 ? 'campaign' : `detail ${index}`} view" ${index === 0 ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async">
             <figcaption>${product.name} / View ${String(index + 1).padStart(2, '0')}</figcaption>
           </figure>
         `).join('')}
@@ -219,7 +220,7 @@
           </details>
           <details>
             <summary>Shipping and returns</summary>
-            <p>Prototype information: delivery regions, rates and secure checkout will be connected when WARA STUDIO moves to its commerce platform.</p>
+            <p>Shipping regions, rates and dispatch timing will be confirmed before Drop 001 opens. Returns guidance will be published with the release.</p>
           </details>
         </div>
       </aside>
@@ -326,9 +327,9 @@
           <aside class="cart-summary">
             <p class="eyebrow">ORDER SUMMARY</p>
             <div><span>Subtotal</span><strong>${WARA.formatMoney(WARA.cartTotal())}</strong></div>
-            <p>Taxes and delivery are calculated when secure checkout is connected.</p>
-            <button class="purchase-button" type="button" data-placeholder-checkout>Checkout</button>
-            <p class="cart-summary__notice" data-checkout-message aria-live="polite">Checkout is a placeholder. No payment information is collected.</p>
+            <p>Taxes and delivery will be confirmed when Drop 001 checkout opens.</p>
+            <button class="purchase-button purchase-button--unavailable" type="button" data-checkout-unavailable aria-describedby="checkout-status">Checkout / Not Open</button>
+            <p class="cart-summary__notice" id="checkout-status" data-checkout-message aria-live="polite">Online checkout opens with Drop 001.</p>
             <a class="text-button" href="shop.html">Continue shopping</a>
           </aside>
         </div>
@@ -338,7 +339,7 @@
     root.addEventListener('click', (event) => {
       const line = event.target.closest('[data-cart-key]');
       if (!line) {
-        if (event.target.closest('[data-placeholder-checkout]')) {
+        if (event.target.closest('[data-checkout-unavailable]')) {
           root.querySelector('[data-checkout-message]')?.classList.add('is-visible');
         }
         return;

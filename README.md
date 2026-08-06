@@ -1,6 +1,6 @@
 # WARA STUDIO Standalone Website
 
-WARA STUDIO is a plain HTML, CSS and JavaScript visual-commerce prototype for an independent streetwear label from Mitrovicë, Kosovo. It has no Shopify code, backend, login, payment form or production checkout.
+WARA STUDIO is a standalone HTML, CSS and JavaScript frontend concept for an independent streetwear label from Mitrovicë, Kosovo. It has no Shopify code, backend, login, payment form or production checkout.
 
 ## Pages
 
@@ -36,7 +36,7 @@ Stop the server with `Ctrl+C`. There is no build step and no package installatio
 
 - `styles.css` contains the complete responsive design system and page layouts.
 - `app.js` contains the loader, navigation, cursor, GSAP, ScrollTrigger and editorial interaction logic.
-- `catalog.js` contains the mock product catalog and localStorage cart data layer.
+- `catalog.js` contains the local product catalog and localStorage cart data layer.
 - `commerce.js` renders shop, product and cart interfaces from the shared catalog.
 - `vendor/` contains local GSAP and ScrollTrigger builds.
 
@@ -44,11 +44,11 @@ Stop the server with `Ctrl+C`. There is no build step and no package installatio
 
 The cart is stored only in the visitor's browser under the localStorage key `waraStudioCartV1`. It supports product variants, quantities, removal, totals and persistence across refreshes.
 
-Checkout is intentionally a visible placeholder. The website does not request or store card, payment, delivery or account information. Secure checkout will be connected later through a production commerce platform.
+Checkout is intentionally unavailable. The website does not request or store card, payment, delivery or account information. Secure checkout will be connected later through a production commerce platform.
 
 ## Image replacement map
 
-Current images are art-direction placeholders. Replace them with original WARA photography or properly licensed assets while preserving the existing aspect ratios and the intended balance of roughly 55% clothing imagery and 45% atmosphere.
+Current images establish the art direction. Replace them with original WARA photography or properly licensed assets while preserving the existing aspect ratios and the intended balance of roughly 55% clothing imagery and 45% atmosphere.
 
 ### Homepage — `index.html`
 
@@ -88,7 +88,7 @@ Products: WARA Heavyweight Tee, Archive Hoodie 001, Transit Cargo, No Destinatio
 
 ## Motion and accessibility
 
-The full homepage loader plays once per browser session. Repeat homepage visits use a shorter transition through `sessionStorage`. `prefers-reduced-motion` removes complex motion and the loader has both a no-JavaScript fallback and a timed fail-safe.
+Desktop plays the complete cinematic loader whenever the homepage is loaded or refreshed. On smaller screens, the approved first-visit sequence remains intact and repeat visits within the same session use a shorter transition. `prefers-reduced-motion` replaces complex movement with a brief accessible reveal, and the loader has both a no-JavaScript fallback and a timed fail-safe.
 
 Desktop uses layered hero type, route drawing, image reveals, parallax, lookbook stacking and horizontal archive motion. Tablet and mobile reduce or remove pinning and parallax. Navigation, filters, variant controls, quantity controls, dialogs and cart actions are keyboard accessible with visible focus states.
 
