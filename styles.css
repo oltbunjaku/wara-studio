@@ -4977,6 +4977,10 @@ button {
   text-transform: uppercase;
 }
 
+.shop-mobile-toolbar {
+  display: none;
+}
+
 .shop-page .filter-list {
   display: flex;
   flex-wrap: wrap;
@@ -6137,16 +6141,71 @@ button {
   }
 
   .shop-toolkit__mobile-row {
+    display: none;
+  }
+
+  .shop-mobile-toolbar {
     position: sticky;
-    z-index: 12;
-    top: var(--header);
-    margin-right: calc(var(--gutter) * -1);
-    margin-left: calc(var(--gutter) * -1);
-    padding: 0.65rem var(--gutter);
+    z-index: 85;
+    top: calc(var(--header) + 1px);
+    display: grid;
+    grid-template-columns: minmax(4.6rem, 0.72fr) minmax(6.2rem, 1fr) minmax(7.6rem, 1.18fr);
+    align-items: stretch;
+    gap: 0;
+    padding: 0 var(--gutter);
     border-top: 1px solid var(--luxury-line);
-    border-bottom: 1px solid var(--luxury-line);
-    background: rgba(247, 241, 230, 0.96);
-    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--luxury-charcoal);
+    background: rgba(247, 241, 230, 0.97);
+    color: var(--luxury-charcoal);
+    backdrop-filter: blur(12px);
+  }
+
+  .shop-mobile-toolbar > :is(p, label) {
+    display: flex;
+    min-width: 0;
+    min-height: 4.25rem;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.3rem;
+    margin: 0;
+    padding: 0.55rem 0.65rem;
+    border-right: 1px solid var(--luxury-line);
+  }
+
+  .shop-mobile-toolbar > :first-child {
+    padding-left: 0;
+  }
+
+  .shop-mobile-toolbar > :last-child {
+    padding-right: 0;
+    border-right: 0;
+  }
+
+  .shop-mobile-toolbar :is(span, strong) {
+    overflow: hidden;
+    font: 700 0.57rem/1.15 var(--sans);
+    letter-spacing: 0.07em;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .shop-mobile-toolbar p span,
+  .shop-mobile-toolbar label > span {
+    color: rgba(36, 35, 33, 0.55);
+  }
+
+  .shop-mobile-toolbar select {
+    width: 100%;
+    min-height: 1.6rem;
+    padding: 0 1.05rem 0 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: var(--luxury-charcoal);
+    font: 700 0.65rem/1 var(--sans);
+    text-overflow: ellipsis;
+    text-transform: uppercase;
   }
 
   .shop-page .filter-list {

@@ -33,6 +33,10 @@
 
   const productCard = (product, index = 0) => {
     const selectedColor = product.colors[0];
+    const primaryImage = selectedColor.images[0];
+    const alternateImage = primaryImage.startsWith('assets/images/products/')
+      ? primaryImage
+      : selectedColor.images[1];
     const unavailable = product.status !== 'available';
     const url = productUrl(product.id, selectedColor.slug);
 
@@ -46,8 +50,8 @@
         style="--card-index:${index}"
       >
         <a class="commerce-card__media" href="${url}" aria-label="View ${product.name}" data-card-product-link>
-          <img src="${selectedColor.images[0]}" alt="${product.name} in ${selectedColor.name}, front view" loading="lazy" decoding="async" data-card-primary>
-          <img class="commerce-card__alternate" src="${selectedColor.images[1]}" alt="${product.name} in ${selectedColor.name}, alternate view" loading="lazy" decoding="async" data-card-alternate>
+          <img src="${primaryImage}" alt="${product.name} in ${selectedColor.name}, front view" loading="lazy" decoding="async" data-card-primary>
+          <img class="commerce-card__alternate" src="${alternateImage}" alt="${product.name} in ${selectedColor.name}, alternate view" loading="lazy" decoding="async" data-card-alternate>
           ${statusLabel(product.status) ? `<span class="commerce-card__status commerce-card__status--${product.status}">${statusLabel(product.status)}</span>` : ''}
         </a>
 
@@ -166,7 +170,7 @@
         primary.alt = `${product.name} in ${color.name}, front view`;
       }
       if (alternate) {
-        alternate.src = color.images[1];
+        alternate.src = color.images[0].startsWith('assets/images/products/') ? color.images[0] : color.images[1];
         alternate.alt = `${product.name} in ${color.name}, alternate view`;
       }
       card.classList.remove('is-changing-colour');
@@ -281,7 +285,8 @@
     const resultsSummary = document.querySelector('[data-results-summary]');
     const filters = Array.from(document.querySelectorAll('[data-filter]'));
     const search = document.querySelector('[data-product-search]');
-    const sort = document.querySelector('[data-sort]');
+    const sorts = Array.from(document.querySelectorAll('[data-sort]'));
+    const mobileFilters = Array.from(document.querySelectorAll('[data-mobile-filter]'));
     const clear = document.querySelector('[data-clear-filters]');
     let activeCategory = 'All';
     let hasRendered = false;
@@ -299,10 +304,11 @@
         return (activeCategory === 'All' || product.category === activeCategory) && (!query || searchable.includes(query));
       });
 
-      if (sort?.value === 'price-low') visible.sort((a, b) => a.price - b.price);
-      if (sort?.value === 'price-high') visible.sort((a, b) => b.price - a.price);
-      if (sort?.value === 'newest') visible.sort((a, b) => b.releaseOrder - a.releaseOrder);
-      if (!sort?.value || sort.value === 'featured') visible.sort((a, b) => a.featuredRank - b.featuredRank);
+      const sortValue = sorts[0]?.value || 'featured';
+      if (sortValue === 'price-low') visible.sort((a, b) => a.price - b.price);
+      if (sortValue === 'price-high') visible.sort((a, b) => b.price - a.price);
+      if (sortValue === 'newest') visible.sort((a, b) => b.releaseOrder - a.releaseOrder);
+      if (sortValue === 'featured') visible.sort((a, b) => a.featuredRank - b.featuredRank);
 
       grid.innerHTML = visible.length
         ? visible.map(productCard).join('')
@@ -329,19 +335,38 @@
         filter.classList.toggle('is-active', active);
         filter.setAttribute('aria-pressed', String(active));
       });
+      mobileFilters.forEach((filter) => { filter.value = 'All'; });
       render();
     };
 
     filters.forEach((filter) => {
       filter.addEventListener('click', () => {
         activeCategory = filter.dataset.filter;
+        mobileFilters.forEach((item) => { item.value = activeCategory; });
         filters.forEach((item) => item.classList.toggle('is-active', item === filter));
         filters.forEach((item) => item.setAttribute('aria-pressed', String(item === filter)));
         render();
       });
     });
     search?.addEventListener('input', render);
-    sort?.addEventListener('change', render);
+    sorts.forEach((sort) => {
+      sort.addEventListener('change', () => {
+        sorts.forEach((item) => { item.value = sort.value; });
+        render();
+      });
+    });
+    mobileFilters.forEach((mobileFilter) => {
+      mobileFilter.addEventListener('change', () => {
+        activeCategory = mobileFilter.value;
+        mobileFilters.forEach((item) => { item.value = activeCategory; });
+        filters.forEach((item) => {
+          const active = item.dataset.filter === activeCategory;
+          item.classList.toggle('is-active', active);
+          item.setAttribute('aria-pressed', String(active));
+        });
+        render();
+      });
+    });
     clear?.addEventListener('click', clearFilters);
     grid.addEventListener('click', (event) => {
       if (event.target.closest('[data-empty-clear]')) clearFilters();

@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&amp;family=Outfit:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=20260808-luxury-shop-v3">
+    <link rel="stylesheet" href="styles.css?v=20260808-live-shop-v4">
     <script>document.documentElement.classList.add('js');</script>
   </head>
   <body class="inner-page shop-page" data-page="shop">
@@ -119,6 +119,30 @@
         </div>
       </section>
 
+      <div class="shop-mobile-toolbar" data-mobile-shop-toolbar aria-label="Mobile shop controls">
+        <p><strong data-product-count>8 pieces</strong><span>Current edit</span></p>
+        <label>
+          <span>Category</span>
+          <select data-mobile-filter aria-label="Filter products by category">
+            <option value="All">All pieces</option>
+            <option value="Tops">Tops</option>
+            <option value="Knitwear">Knitwear</option>
+            <option value="Outerwear">Outerwear</option>
+            <option value="Bottoms">Bottoms</option>
+            <option value="Accessories">Accessories</option>
+          </select>
+        </label>
+        <label>
+          <span>Sort</span>
+          <select data-sort aria-label="Sort products">
+            <option value="featured">Featured</option>
+            <option value="price-low">Price: low to high</option>
+            <option value="price-high">Price: high to low</option>
+            <option value="newest">Newest</option>
+          </select>
+        </label>
+      </div>
+
       <div class="shop-marquee" aria-label="WARA collection notes">
         <div class="shop-marquee__track">
           <span>WARA DROP 001 — RELAXED FORMS — MADE FOR MOVEMENT — MITROVICË —</span>
@@ -156,10 +180,10 @@
       <div class="site-footer__bottom shell technical-row"><span>WARA/STUDIO © 2026</span><span>NO FIXED DESTINATION.</span><a href="#main-content">BACK TO TOP ↑</a></div>
     </footer>
 
-    <script src="vendor/gsap.min.js?v=20260806-luxury-shop"></script>
-    <script src="vendor/ScrollTrigger.min.js?v=20260806-luxury-shop"></script>
-    <script src="catalog.js?v=20260808-luxury-shop-v3"></script>
-    <script src="app.js?v=20260808-luxury-shop-v3"></script>
-    <script src="commerce.js?v=20260808-luxury-shop-v3"></script>
+    <script src="vendor/gsap.min.js?v=20260808-live-shop-v4"></script>
+    <script src="vendor/ScrollTrigger.min.js?v=20260808-live-shop-v4"></script>
+    <script src="catalog.js?v=20260808-live-shop-v4"></script>
+    <script src="app.js?v=20260808-live-shop-v4"></script>
+    <script src="commerce.js?v=20260808-live-shop-v4"></script>
   </body>
 </html>

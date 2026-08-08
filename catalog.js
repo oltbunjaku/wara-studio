@@ -21,7 +21,7 @@
         {
           slug: 'archive-cream', name: 'Archive Cream', value: '#E9DFC8', availableSizes: ['S', 'M', 'L', 'XL'],
           images: [
-            'https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1600&q=88',
+            'assets/images/products/heavyweight-tee-archive-cream-front-v1.jpg',
             'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=1600&q=88',
             'https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1600&q=88'
           ]
@@ -29,7 +29,7 @@
         {
           slug: 'muted-navy', name: 'Muted Navy', value: '#304F6E', availableSizes: ['M', 'L', 'XL'],
           images: [
-            'https://images.unsplash.com/photo-1506629082955-511b1aa562c8?auto=format&fit=crop&w=1600&q=88',
+            'assets/images/products/heavyweight-tee-muted-navy-front-v1.jpg',
             'https://images.unsplash.com/photo-1523398002811-999ca8dec234?auto=format&fit=crop&w=1600&q=88',
             'https://images.unsplash.com/photo-1578681994506-b8f463449011?auto=format&fit=crop&w=1600&q=88'
           ]
@@ -37,7 +37,7 @@
         {
           slug: 'editorial-red', name: 'Editorial Red', value: '#C85D4B', availableSizes: ['S', 'M', 'L'],
           images: [
-            'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1600&q=88',
+            'assets/images/products/heavyweight-tee-editorial-red-front-v1.jpg',
             'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1600&q=88',
             'https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=1600&q=88'
           ]
@@ -62,7 +62,7 @@
         {
           slug: 'deep-charcoal', name: 'Deep Charcoal', value: '#242321', availableSizes: ['S', 'M', 'L', 'XL'],
           images: [
-            'https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=1600&q=88',
+            'assets/images/products/archive-hoodie-deep-charcoal-front-v1.jpg',
             'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=1600&q=88',
             'https://images.unsplash.com/photo-1578681994506-b8f463449011?auto=format&fit=crop&w=1600&q=88'
           ]
@@ -70,7 +70,7 @@
         {
           slug: 'muted-navy', name: 'Muted Navy', value: '#304F6E', availableSizes: ['M', 'L', 'XL'],
           images: [
-            'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=1600&q=88',
+            'assets/images/products/archive-hoodie-muted-navy-front-v1.jpg',
             'https://images.unsplash.com/photo-1543076447-215ad9ba6923?auto=format&fit=crop&w=1600&q=88',
             'https://images.unsplash.com/photo-1521223890158-f9f7c3d5d504?auto=format&fit=crop&w=1600&q=88'
           ]
@@ -95,7 +95,7 @@
         {
           slug: 'warm-sand', name: 'Warm Sand', value: '#D6C39E', availableSizes: ['28', '30', '32', '34', '36'],
           images: [
-            'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1600&q=88',
+            'assets/images/products/transit-cargo-warm-sand-front-v1.jpg',
             'https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=1600&q=88',
             'https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1600&q=88'
           ]
@@ -103,7 +103,7 @@
         {
           slug: 'deep-charcoal', name: 'Deep Charcoal', value: '#242321', availableSizes: ['30', '32', '34', '36'],
           images: [
-            'https://images.unsplash.com/photo-1506629082955-511b1aa562c8?auto=format&fit=crop&w=1600&q=88',
+            'assets/images/products/transit-cargo-deep-charcoal-front-v1.jpg',
             'https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1600&q=88',
             'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=1600&q=88'
           ]
@@ -128,7 +128,7 @@
         {
           slug: 'deep-teal', name: 'Deep Teal', value: '#4B7C78', availableSizes: ['S', 'M', 'L', 'XL'],
           images: [
-            'https://images.unsplash.com/photo-1543076447-215ad9ba6923?auto=format&fit=crop&w=1600&q=88',
+            'assets/images/products/destination-jacket-deep-teal-front-v1.jpg',
             'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1600&q=88',
             'https://images.unsplash.com/photo-1521223890158-f9f7c3d5d504?auto=format&fit=crop&w=1600&q=88'
           ]
@@ -136,7 +136,7 @@
         {
           slug: 'heritage-olive', name: 'Heritage Olive', value: '#66705A', availableSizes: ['M', 'L', 'XL'],
           images: [
-            'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=1600&q=88',
+            'assets/images/products/destination-jacket-heritage-olive-front-v1.jpg',
             'https://images.unsplash.com/photo-1523398002811-999ca8dec234?auto=format&fit=crop&w=1600&q=88',
             'https://images.unsplash.com/photo-1578681994506-b8f463449011?auto=format&fit=crop&w=1600&q=88'
           ]
@@ -194,7 +194,7 @@
         {
           slug: 'heritage-olive', name: 'Heritage Olive', value: '#66705A', availableSizes: ['S', 'M', 'L', 'XL'],
           images: [
-            'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=1600&q=88',
+            'assets/images/products/field-overshirt-heritage-olive-front-v1.jpg',
             'https://images.unsplash.com/photo-1598033129183-c4f50c736f10?auto=format&fit=crop&w=1600&q=88',
             'https://images.unsplash.com/photo-1523398002811-999ca8dec234?auto=format&fit=crop&w=1600&q=88'
           ]
@@ -202,7 +202,7 @@
         {
           slug: 'soft-stone', name: 'Soft Stone', value: '#B8B0A2', availableSizes: ['M', 'L', 'XL'],
           images: [
-            'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1600&q=88',
+            'assets/images/products/field-overshirt-soft-stone-front-v1.jpg',
             'https://images.unsplash.com/photo-1543076447-215ad9ba6923?auto=format&fit=crop&w=1600&q=88',
             'https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1600&q=88'
           ]
@@ -260,7 +260,7 @@
         {
           slug: 'warm-brown', name: 'Warm Brown', value: '#765A43', availableSizes: ['One Size'],
           images: [
-            'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=1600&q=88',
+            'assets/images/products/archive-bag-warm-brown-front-v1.jpg',
             'https://images.unsplash.com/photo-1594223274512-ad4803739b7c?auto=format&fit=crop&w=1600&q=88',
             'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=1600&q=88'
           ]
@@ -268,7 +268,7 @@
         {
           slug: 'deep-charcoal', name: 'Deep Charcoal', value: '#242321', availableSizes: ['One Size'],
           images: [
-            'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=1600&q=88',
+            'assets/images/products/archive-bag-deep-charcoal-front-v1.jpg',
             'https://images.unsplash.com/photo-1594223274512-ad4803739b7c?auto=format&fit=crop&w=1600&q=88',
             'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=1600&q=88'
           ]

@@ -74,7 +74,7 @@ Each product contains a `colors` array. Every colour owns its real image set and
 }
 ```
 
-The shop swatches, product gallery and cart line image all resolve from this same colour object. Final WARA photography can therefore replace the temporary URLs inside `catalog.js` without changing the commerce logic. Keep the order as front, back and detail.
+The shop swatches, product gallery and cart line image all resolve from this same colour object. Art-directed temporary lead images live in `assets/images/products/`; remaining secondary views use licensed-source URLs. Final WARA photography can replace either path inside `catalog.js` without changing the commerce logic. Keep the order as front, back and detail.
 
 Products: WARA Heavyweight Tee, Archive Hoodie 001, Transit Cargo, No Destination Jacket, Route Knit, Field Overshirt, WARA Cap and Archive Bag.
 
