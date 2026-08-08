@@ -62,13 +62,21 @@ Current images establish the art direction. Replace them with original WARA phot
 
 ### Shared product catalog — `catalog.js`
 
-Each of the eight products has three ordered image positions:
+Each product contains a `colors` array. Every colour owns its real image set and its own available sizes:
 
-1. Primary campaign or garment view.
-2. Alternate model, back or colourway view.
-3. Fabric, construction or styling detail.
+```js
+{
+  slug: 'archive-cream',
+  name: 'Archive Cream',
+  value: '#E9DFC8',
+  availableSizes: ['S', 'M', 'L', 'XL'],
+  images: ['front-image', 'back-image', 'detail-image']
+}
+```
 
-Products: WARA Heavyweight Tee, Archive Hoodie 001, Transit Cargo, No Destination Jacket, Route Knit, Field Overshirt, WARA Cap and Archive Bag. These images are reused automatically by `shop.html`, `product.html` and `cart.html`.
+The shop swatches, product gallery and cart line image all resolve from this same colour object. Final WARA photography can therefore replace the temporary URLs inside `catalog.js` without changing the commerce logic. Keep the order as front, back and detail.
+
+Products: WARA Heavyweight Tee, Archive Hoodie 001, Transit Cargo, No Destination Jacket, Route Knit, Field Overshirt, WARA Cap and Archive Bag.
 
 ### Shop — `shop.html`
 
